@@ -28,16 +28,13 @@ class Keys:
     def particular(self, prefix: str):
 
         try:
-            dictionary = self.__s3_client.head_object(Bucket=self.__s3_parameters.bucket_name, Key=prefix)
+            dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__s3_parameters.bucket_name, Prefix=prefix)
         except self.__s3_client.exceptions.NoSuchKey as err:
             raise Exception(err) from err
         except botocore.exceptions.ClientError as err:
             raise Exception(err) from err
 
-        if dictionary:
-            items = list(self.__bucket.objects.filter(Prefix=prefix))
-        else:
-            raise Exception('Inaccessible Amazon S3 Bucket Prefix')
+        items = [dictionary['Key'] for dictionary in dictionaries['Contents']]
 
         return items
 
