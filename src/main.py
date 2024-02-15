@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+import numpy as np
 
 
 def main():
@@ -9,13 +10,15 @@ def main():
     logger = logging.getLogger(__name__)
     logger.info('Spreads')
 
-    # Investigating bucket prefixes
+    # Objective: Daily quantile spreads per station
+    # Note: The data sets of each telemetric device station are stored within its distinct S3 bucket node.
+    # Hence: Retrieve the data sets by node [Upcoming: README.md Diagram]
+    # bucket prefixes
     keys = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters)
-    items = keys.particular(
-        prefix=s3_parameters.points_)
-    logger.info(items)
-    items = keys.all()
-    logger.info(items)
+    items = keys.particular(prefix=s3_parameters.points_)
+    blob = [f's3://{s3_parameters.bucket_name}{os.path.dirname(item)}' for item in items]
+    paths = np.unique(np.array(blob))
+    logger.info(paths)
 
     # The readings
     src.data.readings.Readings(s3_parameters=s3_parameters).exc()
