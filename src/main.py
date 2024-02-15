@@ -4,10 +4,16 @@ import sys
 
 
 def main():
+
+    # Logging
     logger = logging.getLogger(__name__)
     logger.info('Spreads')
 
+    # The readings
     src.data.readings.Readings(s3_parameters=s3_parameters).exc()
+
+    # Delete cache directories
+    src.functions.cache.Cache().delete()
 
 
 if __name__ == '__main__':
@@ -22,6 +28,7 @@ if __name__ == '__main__':
     import src.data.readings
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
+    import src.functions.cache
     import src.functions.service
     import src.s3.s3_parameters
 
