@@ -16,9 +16,10 @@ def main():
     # bucket prefixes
     keys = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters)
     items = keys.particular(prefix=s3_parameters.points_)
-    blob = [f's3://{s3_parameters.bucket_name}{os.path.dirname(item)}' for item in items]
-    paths = np.unique(np.array(blob))
-    logger.info(paths)
+    strings = [os.path.dirname(item) for item in items]
+    paths = np.unique(np.array(strings))
+    locators = [f's3://{s3_parameters.bucket_name}/{path}' for path in paths]
+    logger.info(locators)
 
     # The readings
     src.data.readings.Readings(s3_parameters=s3_parameters).exc()
