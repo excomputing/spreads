@@ -25,7 +25,7 @@ class Keys:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
-    def particular(self, prefix: str):
+    def particular(self, prefix: str) -> list:
 
         try:
             dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__s3_parameters.bucket_name, Prefix=prefix)
@@ -38,7 +38,7 @@ class Keys:
 
         return items
 
-    def all(self):
+    def all(self) -> list:
 
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
@@ -48,8 +48,8 @@ class Keys:
             raise Exception(err) from err
 
         if state:
-            items = list(self.__bucket.objects.all())
+            items = [k.key for k in list(self.__bucket.objects.all())]
         else:
-            raise Exception('Inaccessible Amazon S3 Bucket')
+            items = []
 
         return items
