@@ -1,7 +1,6 @@
 import logging
 import os
 import sys
-import numpy as np
 
 
 def main():
@@ -15,14 +14,10 @@ def main():
     # Hence: Retrieve the data sets by node [Upcoming: README.md Diagram]
     # bucket prefixes
     keys = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters)
-    items = keys.particular(prefix=s3_parameters.points_)
-    strings = [os.path.dirname(item) for item in items]
-    paths = np.unique(np.array(strings))
-    locators = [f's3://{s3_parameters.bucket_name}/{path}' for path in paths]
-    logger.info(locators)
+    s3_keys: list  = keys.particular(prefix=s3_parameters.points_)
 
     # The readings
-    src.data.readings.Readings(s3_parameters=s3_parameters).exc()
+    src.data.readings.Readings(s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
