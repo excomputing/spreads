@@ -2,7 +2,7 @@ dask[complete]>=2023.11
 graphviz
 boto3
 botocore
-s3fs
+s3fs>=2024.*
 scikit-learn
 numpy>=1.25.*
 pandas>=2.0.*
