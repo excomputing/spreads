@@ -9,6 +9,11 @@ def main():
     logger = logging.getLogger(__name__)
     logger.info('Spreads')
 
+    # Investigating bucket prefixes
+    items = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters).particular(
+        prefix=s3_parameters.points_)
+    logger.info(items)
+
     # The readings
     src.data.readings.Readings(s3_parameters=s3_parameters).exc()
 
@@ -30,6 +35,7 @@ if __name__ == '__main__':
     import src.elements.service as sr
     import src.functions.cache
     import src.functions.service
+    import src.s3.keys
     import src.s3.s3_parameters
 
     # S3 S3Parameters, Service Instance
