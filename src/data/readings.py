@@ -1,6 +1,8 @@
-import dask.dataframe as ddf
-import config
 import logging
+import os
+
+import dask.dataframe as ddf
+import numpy as np
 
 import src.elements.s3_parameters as s3p
 
@@ -15,15 +17,18 @@ class Readings:
 
         self.__s3_parameters = s3_parameters
 
-        configurations = config.Config()
-        self.__source = configurations.source
-
-    def exc(self):
+    def exc(self, s3_keys: list):
         """
 
+        :param s3_keys:
         :return:
         """
 
-        frame = ddf.read_csv(urlpath=self.__source)
-        details = frame.compute(scheduler='processes')
-        logging.log(level=logging.INFO, msg=details)
+        strings = [os.path.dirname(s3_key) for s3_key in s3_keys]
+        paths = np.unique(np.array(strings))
+        nodes = [f's3://{self.__s3_parameters.bucket_name}/{path}/*.csv' for path in paths]
+
+        for node in nodes:
+            frame = ddf.read_csv(urlpath=node)
+            details = frame.compute(scheduler='processes')
+            logging.log(level=logging.INFO, msg=details)
