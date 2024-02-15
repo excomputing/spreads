@@ -10,8 +10,11 @@ def main():
     logger.info('Spreads')
 
     # Investigating bucket prefixes
-    items = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters).particular(
+    keys = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters)
+    items = keys.particular(
         prefix=s3_parameters.points_)
+    logger.info(items)
+    items = keys.all()
     logger.info(items)
 
     # The readings
