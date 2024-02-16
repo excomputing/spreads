@@ -9,7 +9,7 @@ import src.algorithms.distributions
 import src.elements.s3_parameters as s3p
 
 
-class Readings:
+class Interface:
 
     def __init__(self, s3_parameters: s3p.S3Parameters):
         """
