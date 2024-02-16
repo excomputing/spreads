@@ -25,13 +25,13 @@ class Readings:
         self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
                          0.75: 'upper_quartile', 0.9: 'upper_decile'}
 
-    def __calculations(self, frame: ddf.DataFrame) -> pd.DataFrame:
+    def __quantiles(self, frame: ddf.DataFrame) -> pd.DataFrame:
 
         computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
             by=['sequence_id', 'date']).apply(self.__distributions.quantiles, meta=self.__meta)
-        calculations: pd.DataFrame = computations.compute(scheduler='processes')
+        content: pd.DataFrame = computations.compute(scheduler='processes')
 
-        return calculations
+        return content
 
     def __structure(self, blob: pd.DataFrame):
 
@@ -57,5 +57,5 @@ class Readings:
 
         for node in nodes:
             frame: ddf.DataFrame = ddf.read_csv(node)
-            calculations = self.__calculations(frame=frame)
-            self.__structure(blob=calculations)
+            quantiles = self.__quantiles(frame=frame)
+            self.__structure(blob=quantiles)
