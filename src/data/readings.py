@@ -39,6 +39,9 @@ class Readings:
         data.reset_index(drop=False, inplace=True)
         data.rename(columns=self.__rename)
 
+        nanoseconds = pd.to_datetime(data['date'], format='%Y-%m-%d').astype(np.int64)
+        data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
+
         logging.log(level=logging.INFO, msg=data.head())
 
     def exc(self, s3_keys: list):
@@ -53,7 +56,6 @@ class Readings:
         nodes = [f's3://{self.__s3_parameters.bucket_name}/{path}/*.csv' for path in paths]
 
         for node in nodes:
-
             frame: ddf.DataFrame = ddf.read_csv(node)
             calculations = self.__calculations(frame=frame)
             self.__structure(blob=calculations)
