@@ -17,7 +17,7 @@ def main():
     s3_keys: list  = keys.particular(prefix=s3_parameters.points_)
 
     # The readings
-    src.data.readings.Readings(s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
+    src.algorithms.readings.Readings(s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
@@ -32,7 +32,7 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Modules
-    import src.data.readings
+    import src.algorithms.readings
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
     import src.functions.cache
