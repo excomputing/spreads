@@ -27,19 +27,19 @@ class Readings:
 
     def __calculations(self, frame: ddf.DataFrame) -> pd.DataFrame:
 
-        computations = frame[['sequence_id', 'date', 'measure']].groupby(
+        computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
             by=['sequence_id', 'date']).apply(self.__distributions.quantiles, meta=self.__meta)
-        calculations = computations.compute(scheduler='processes')
-        calculations.reset_index(drop=False, inplace=True)
+        calculations: pd.DataFrame = computations.compute(scheduler='processes')
 
         return calculations
 
-    def __persist(self, blob: pd.DataFrame) -> bool:
+    def __structure(self, blob: pd.DataFrame):
 
-        logging.log(level=logging.INFO,
-                    msg=blob.rename(columns=self.__rename).head())
+        data = blob.copy()
+        data.reset_index(drop=False, inplace=True)
+        data.rename(columns=self.__rename)
 
-        return True
+        logging.log(level=logging.INFO, msg=data.head())
 
     def exc(self, s3_keys: list):
         """
@@ -54,7 +54,6 @@ class Readings:
 
         for node in nodes:
 
-            logging.log(level=logging.INFO, msg=f'\n\n{node}')
             frame: ddf.DataFrame = ddf.read_csv(node)
             calculations = self.__calculations(frame=frame)
-            self.__persist(blob=calculations)
+            self.__structure(blob=calculations)
