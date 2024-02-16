@@ -38,7 +38,7 @@ class Readings:
     def __extrema(self, frame: ddf.DataFrame) -> pd.DataFrame:
 
         computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
-            by=['sequence_id', 'date']).agg({'measure': ['min', 'max']})
+            by=['sequence_id', 'date']).agg(minimum= ('measure', min), maximum=('measure', max))
         content: pd.DataFrame = computations.compute(scheduler='processes')
 
         content.reset_index(drop=False, inplace=True)
