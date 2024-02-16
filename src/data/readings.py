@@ -45,11 +45,10 @@ class Readings:
 
         return content
 
-    def __structure(self, blob: pd.DataFrame):
+    def __structure(self, quantiles_: pd.DataFrame, extrema_: pd.DataFrame):
 
-        data = blob.copy()
-
-        # data.rename(columns=self.__rename)
+        data = quantiles_.copy().merge(extrema_.copy(), on=['sequence_id', 'date'])
+        data.rename(columns=self.__rename)
 
         nanoseconds = pd.to_datetime(data['date'], format='%Y-%m-%d').astype(np.int64)
         data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
@@ -71,4 +70,4 @@ class Readings:
             frame: ddf.DataFrame = ddf.read_csv(node)
             quantiles = self.__quantiles(frame=frame)
             extrema = self.__extrema(frame=frame)
-            self.__structure(blob=quantiles)
+            self.__structure(quantiles_=quantiles, extrema_=extrema)
