@@ -33,13 +33,13 @@ class Readings:
 
         return content
 
-    def __extrema(self, frame: ddf.DataFrame):
+    def __extrema(self, frame: ddf.DataFrame) -> pd.DataFrame:
 
         computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
             by=['sequence_id', 'date']).agg({'measure': ['min', 'max']})
         content: pd.DataFrame = computations.compute(scheduler='processes')
 
-        logging.log(level=logging.INFO, msg=content)
+        return content
 
     def __structure(self, blob: pd.DataFrame):
 
