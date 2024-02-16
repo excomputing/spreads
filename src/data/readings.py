@@ -47,13 +47,14 @@ class Readings:
 
     def __structure(self, quantiles_: pd.DataFrame, extrema_: pd.DataFrame):
 
-        data = quantiles_.copy().merge(extrema_.copy(), on=['sequence_id', 'date'])
+        data = quantiles_.copy()
         data.rename(columns=self.__rename)
 
         nanoseconds = pd.to_datetime(data['date'], format='%Y-%m-%d').astype(np.int64)
         data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
 
         logging.log(level=logging.INFO, msg=data.head())
+        logging.log(level=logging.INFO, msg=extrema_.head())
 
     def exc(self, s3_keys: list):
         """
