@@ -6,6 +6,8 @@ import numpy as np
 
 import src.elements.s3_parameters as s3p
 
+import src.algorithms.distributions
+
 
 class Readings:
 
@@ -16,6 +18,12 @@ class Readings:
         """
 
         self.__s3_parameters = s3_parameters
+
+        self.__distributions = src.algorithms.distributions.Distributions()
+
+        self.__meta = {0.1: float, 0.25: float, 0.5: float, 0.75: float, 0.9: float}
+        self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
+                         0.75: 'upper_quartile', 0.9: 'upper_decile'}
 
     def exc(self, s3_keys: list):
         """
@@ -29,6 +37,12 @@ class Readings:
         nodes = [f's3://{self.__s3_parameters.bucket_name}/{path}/*.csv' for path in paths]
 
         for node in nodes:
-            frame = ddf.read_csv(urlpath=node)
-            details = frame.compute(scheduler='processes')
-            logging.log(level=logging.INFO, msg=details)
+
+            frame: ddf.DataFrame = ddf.read_csv(node)
+
+            computations = frame[['sequence_id', 'date', 'measure']].groupby(
+                by=['sequence_id', 'date']).apply(self.__distributions, meta=self.__meta)
+            calculations = computations.compute(scheduler='processes')
+            calculations.reset_index(drop=False, inplace=True)
+
+            logging.log(level=logging.INFO, msg=calculations)
