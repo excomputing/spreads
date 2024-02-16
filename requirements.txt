@@ -1,4 +1,5 @@
 dask[complete]>=2023.11
+dask-expr
 graphviz
 boto3
 botocore
