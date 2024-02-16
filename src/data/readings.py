@@ -45,16 +45,13 @@ class Readings:
 
         return content
 
-    def __structure(self, quantiles_: pd.DataFrame, extrema_: pd.DataFrame):
+    def __epoch(self, blob: pd.DataFrame) -> pd.DataFrame:
 
-        data = quantiles_.copy().merge(extrema_, on=['sequence_id', 'date'], how='inner')
-        data.rename(columns=self.__rename, inplace=True)
-
-        nanoseconds = pd.to_datetime(data['date'], format='%Y-%m-%d').astype(np.int64)
+        data = blob.copy()
+        nanoseconds = pd.to_datetime(data.copy()['date'], format='%Y-%m-%d').astype(np.int64)
         data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
 
-        logging.log(level=logging.INFO, msg=data.head())
-        logging.log(level=logging.INFO, msg=extrema_.head())
+        return data
 
     def exc(self, s3_keys: list):
         """
@@ -68,7 +65,19 @@ class Readings:
         nodes = [f's3://{self.__s3_parameters.bucket_name}/{path}/*.csv' for path in paths]
 
         for node in nodes:
+
+            # A collection of a device's timeseries data; retrieved in parallel
             frame: ddf.DataFrame = ddf.read_csv(node)
+
+            # Calculations
             quantiles = self.__quantiles(frame=frame)
             extrema = self.__extrema(frame=frame)
-            self.__structure(quantiles_=quantiles, extrema_=extrema)
+
+            # Merge
+            data = quantiles.copy().merge(extrema.copy(), on=['sequence_id', 'date'], how='inner')
+            data.rename(columns=self.__rename, inplace=True)
+
+            # Epoch
+            data = self.__epoch(blob=data)
+
+            logging.log(level=logging.INFO, msg=data.head())
