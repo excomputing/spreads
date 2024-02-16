@@ -4,15 +4,20 @@ import sys
 
 
 def main():
+    """
+    The focus is the daily quantile spreads per station.  Note, the data sets of each
+    telemetric device station are stored within a distinct Amazon S3 bucket node.
+
+    Upcoming: README.md Illustration
+
+    :return:
+    """
 
     # Logging
     logger = logging.getLogger(__name__)
     logger.info('Spreads')
 
-    # Objective: Daily quantile spreads per station
-    # Note: The data sets of each telemetric device station are stored within its distinct S3 bucket node.
-    # Hence: Retrieve the data sets by node [Upcoming: README.md Diagram]
-    # bucket prefixes
+    # The list of keys, i.e., CSV files, that store telemetric data
     keys = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters)
     s3_keys: list = keys.particular(prefix=s3_parameters.points_)
 
