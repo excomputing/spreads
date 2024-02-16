@@ -48,7 +48,7 @@ class Readings:
     def __structure(self, quantiles_: pd.DataFrame, extrema_: pd.DataFrame):
 
         data = quantiles_.copy().merge(extrema_, on=['sequence_id', 'date'], how='inner')
-        data.rename(columns=self.__rename)
+        data.rename(columns=self.__rename, inplace=True)
 
         nanoseconds = pd.to_datetime(data['date'], format='%Y-%m-%d').astype(np.int64)
         data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
