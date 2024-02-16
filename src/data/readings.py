@@ -31,6 +31,8 @@ class Readings:
             by=['sequence_id', 'date']).apply(self.__distributions.quantiles, meta=self.__meta)
         content: pd.DataFrame = computations.compute(scheduler='processes')
 
+        content.reset_index(drop=False, inplace=True)
+
         return content
 
     def __extrema(self, frame: ddf.DataFrame) -> pd.DataFrame:
@@ -39,13 +41,15 @@ class Readings:
             by=['sequence_id', 'date']).agg({'measure': ['min', 'max']})
         content: pd.DataFrame = computations.compute(scheduler='processes')
 
+        content.reset_index(drop=False, inplace=True)
+
         return content
 
     def __structure(self, blob: pd.DataFrame):
 
         data = blob.copy()
-        data.reset_index(drop=False, inplace=True)
-        data.rename(columns=self.__rename)
+
+        # data.rename(columns=self.__rename)
 
         nanoseconds = pd.to_datetime(data['date'], format='%Y-%m-%d').astype(np.int64)
         data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
@@ -66,4 +70,5 @@ class Readings:
         for node in nodes:
             frame: ddf.DataFrame = ddf.read_csv(node)
             quantiles = self.__quantiles(frame=frame)
+            extrema = self.__extrema(frame=frame)
             self.__structure(blob=quantiles)
