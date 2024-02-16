@@ -14,10 +14,10 @@ def main():
     # Hence: Retrieve the data sets by node [Upcoming: README.md Diagram]
     # bucket prefixes
     keys = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters)
-    s3_keys: list  = keys.particular(prefix=s3_parameters.points_)
+    s3_keys: list = keys.particular(prefix=s3_parameters.points_)
 
     # The readings
-    src.algorithms.readings.Readings(s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
+    src.algorithms.interface.Interface(s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
@@ -32,7 +32,7 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Modules
-    import src.algorithms.readings
+    import src.algorithms.interface
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
     import src.functions.cache
