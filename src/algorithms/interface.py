@@ -26,6 +26,11 @@ class Interface:
                          0.75: 'upper_quartile', 0.9: 'upper_decile'}
 
     def __quantiles(self, frame: ddf.DataFrame) -> pd.DataFrame:
+        """
+        
+        :param frame:
+        :return:
+        """
 
         computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
             by=['sequence_id', 'date']).apply(self.__distributions.quantiles, meta=self.__meta)
@@ -35,17 +40,29 @@ class Interface:
 
         return content
 
-    def __extrema(self, frame: ddf.DataFrame) -> pd.DataFrame:
+    @staticmethod
+    def __extrema(frame: ddf.DataFrame) -> pd.DataFrame:
+        """
+
+        :param frame:
+        :return:
+        """
 
         computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
-            by=['sequence_id', 'date']).agg(minimum= ('measure', min), maximum=('measure', max))
+            by=['sequence_id', 'date']).agg(minimum=('measure', min), maximum=('measure', max))
         content: pd.DataFrame = computations.compute(scheduler='processes')
 
         content.reset_index(drop=False, inplace=True)
 
         return content
 
-    def __epoch(self, blob: pd.DataFrame) -> pd.DataFrame:
+    @staticmethod
+    def __epoch(blob: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param blob:
+        :return:
+        """
 
         data = blob.copy()
         nanoseconds = pd.to_datetime(data.copy()['date'], format='%Y-%m-%d').astype(np.int64)
