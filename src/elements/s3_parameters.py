@@ -40,4 +40,4 @@ class S3Parameters(typing.NamedTuple):
     source_references_: str
     source_n_references: int
     delivery_bucket_name: str
-    delivery_computations: str
+    delivery_computations_: str
