@@ -20,17 +20,17 @@ def main():
     logger.info('Spreads')
 
     # The list of keys, i.e., CSV files, that store telemetric data
-    s3_keys = src.s3.keys.Keys(
-        service=service, s3_parameters=s3_parameters).particular(prefix=s3_parameters.points_)
-
     # The nodes, i.e., the distinct paths
-    nodes: list = src.algorithms.nodes.Nodes(
-        s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
+    bucket_name = s3_parameters.source_bucket_name
+    s3_keys = src.s3.keys.Keys(
+        service=service, bucket_name=bucket_name).particular(prefix=s3_parameters.source_points_)
+    nodes: list = src.algorithms.nodes.Nodes().exc(s3_keys=s3_keys, bucket_name=bucket_name)
 
+    # References
     references: pd.DataFrame = src.algorithms.references.References(
         service=service, s3_parameters=s3_parameters).exc()
 
-    # The readings
+    # Calculate quantiles
     src.algorithms.interface.Interface().exc(nodes=nodes, references=references)
 
     # Delete cache directories
