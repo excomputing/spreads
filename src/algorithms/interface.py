@@ -56,10 +56,11 @@ class Interface:
 
         return content
 
-    def exc(self, nodes: list[str]):
+    def exc(self, nodes: list[str], references: pd.DataFrame):
         """
 
         :param nodes:
+        :param references:
         :return:
         """
 
