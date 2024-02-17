@@ -17,7 +17,9 @@ class Persist:
     def __init__(self, references: pd.DataFrame):
         """
 
-        :param references: 
+        :param references: Each instance of the references data frame describes the characteristics of a unique sequence of
+        telemetric data.  The details include sequence identification code, the geographic coordinates of the telemetric
+        device, the pollutant being measured, the unit of measure, etc.
         """
 
         self.__references = references
