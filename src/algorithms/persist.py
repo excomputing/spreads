@@ -13,7 +13,7 @@ class Persist:
 
         self.__references = references
         self.__fields = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
-                               'minimum', 'maximum', 'date']
+                         'minimum', 'maximum', 'date']
 
         # Logging: If necessary, set force = True
         logging.basicConfig(level=logging.INFO, format='%(message)s\n%(asctime)s.%(msecs)03d',
@@ -34,11 +34,18 @@ class Persist:
 
         return data
 
-    def __attributes(self, sequence_id):
+    def __attributes(self, sequence_id) -> dict:
 
-        attributes: pd.DataFrame = self.__references.copy().loc[self.__references['sequence_id'] == sequence_id, :]
+        attributes: pd.DataFrame = self.__references.copy().loc[
+                                   self.__references['sequence_id'] == sequence_id, :]
 
-        return attributes.to_dict(orient='records')
+        return attributes.to_dict(orient='records')[0]
+
+    def __dictionaries(self, blob: pd.DataFrame) -> dict:
+
+        frame = blob.copy()[self.__fields]
+
+        return frame.to_dict(orient='tight')
 
     def exc(self, data: pd.DataFrame):
         """
@@ -47,14 +54,19 @@ class Persist:
         :return:
         """
 
+        # Adding an epoch field; milliseconds seconds since ...
         frame: pd.DataFrame = self.__epoch(blob=data.copy())
-        dictionaries = frame.to_dict(orient='tight')
 
-        # Attributes
+        # The dictionaries of <frame>
+        dictionaries = self.__dictionaries(blob=frame)
+
+        # The attributes of the data encoded by <frame>
         sequence_id: int = frame['sequence_id'].unique()[0]
         attributes = self.__attributes(sequence_id=sequence_id)
 
-        self.__logger.info(msg=frame)
-        self.__logger.info(msg=attributes)
-        self.__logger.info(msg=dictionaries['columns'])
-        self.__logger.info(msg=dictionaries['data'])
+        # Preview
+        structure = {
+            'attributes': attributes, 'columns': dictionaries['columns'],
+            'data': dictionaries['data']
+        }
+        self.__logger.info(structure)
