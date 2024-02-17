@@ -60,5 +60,4 @@ if __name__ == '__main__':
     s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
     service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
 
-
     main()
