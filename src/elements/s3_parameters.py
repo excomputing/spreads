@@ -36,8 +36,8 @@ class S3Parameters(typing.NamedTuple):
     location_constraint: str
     access_control_list: str
     source_bucket_name: str
-    source_points_: str
+    source_path_: str
     source_references_: str
     source_n_references: int
     delivery_bucket_name: str
-    delivery_computations_: str
+    delivery_path_: str
