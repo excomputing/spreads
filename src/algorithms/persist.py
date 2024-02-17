@@ -6,12 +6,14 @@ import pandas as pd
 
 class Persist:
 
-    def __init__(self):
+    def __init__(self, references: pd.DataFrame):
         """
         Constructor
         """
 
-        self.__expectations = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
+        self.__references = references
+
+        self.__fields = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
                                'minimum', 'maximum', 'date']
 
     @staticmethod
@@ -28,6 +30,12 @@ class Persist:
 
         return data
 
+    def __attributes(self, sequence_id):
+
+        attributes = self.__references.copy().loc[self.__references['sequence_id'] == sequence_id, :]
+
+        return attributes
+
     def exc(self, data: pd.DataFrame):
         """
 
@@ -35,6 +43,12 @@ class Persist:
         :return:
         """
 
-        frame = self.__epoch(blob=data.copy())
+        frame: pd.DataFrame = self.__epoch(blob=data.copy())
+
+        # Attributes
+        sequence_id: int = frame['sequence_id'].unique()[0]
+        attributes = self.__attributes(sequence_id=sequence_id)
 
         logging.log(level=logging.INFO, msg=frame)
+        logging.log(level=logging.INFO, msg=attributes)
+        logging.log(level=logging.INFO, msg=type(attributes))
