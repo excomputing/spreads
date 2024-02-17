@@ -3,23 +3,22 @@ import logging
 import boto3
 import botocore.exceptions
 
-import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 
 
 class Keys:
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
+    def __init__(self, service: sr.Service, bucket_name: str):
         """
 
         :param service:
-        :param s3_parameters:
+        :param bucket_name:
         """
 
-        self.__s3_parameters: s3p.S3Parameters = s3_parameters
+        self.__bucket_name = bucket_name
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
         self.__s3_client = service.s3_client
-        self.__bucket = self.__s3_resource.Bucket(name=self.__s3_parameters.bucket_name)
+        self.__bucket = self.__s3_resource.Bucket(name=self.__bucket_name)
 
         # Logging
         logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
@@ -29,7 +28,7 @@ class Keys:
     def particular(self, prefix: str) -> list[str]:
 
         try:
-            dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__s3_parameters.bucket_name, Prefix=prefix)
+            dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__bucket_name, Prefix=prefix)
         except self.__s3_client.exceptions.NoSuchKey as err:
             raise Exception(err) from err
         except botocore.exceptions.ClientError as err:
