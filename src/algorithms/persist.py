@@ -81,7 +81,8 @@ class Persist:
 
         message = self.__objects.write(
             nodes=nodes,
-            path=os.path.join(self.__storage, f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}"))
+            path=os.path.join(self.__storage, f"pollutant_{dictionary['pollutant_id']}_station_"
+                                              f"{dictionary['station_id']}.json"))
 
         return message
 
@@ -108,4 +109,5 @@ class Persist:
             'attributes': attributes, 'columns': dictionaries['columns'],
             'data': dictionaries['data']
         }
-        self.__logger.info(structure)
+        message = self.__write(nodes=structure)
+        self.__logger.info(message)
