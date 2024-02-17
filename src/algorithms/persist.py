@@ -32,9 +32,9 @@ class Persist:
 
     def __attributes(self, sequence_id):
 
-        attributes = self.__references.copy().loc[self.__references['sequence_id'] == sequence_id, :]
+        attributes: pd.DataFrame = self.__references.copy().loc[self.__references['sequence_id'] == sequence_id, :]
 
-        return attributes
+        return attributes.to_dict(orient='records')
 
     def exc(self, data: pd.DataFrame):
         """
@@ -44,11 +44,13 @@ class Persist:
         """
 
         frame: pd.DataFrame = self.__epoch(blob=data.copy())
+        dictionaries = frame.to_dict(orient='tight')
 
         # Attributes
         sequence_id: int = frame['sequence_id'].unique()[0]
         attributes = self.__attributes(sequence_id=sequence_id)
 
+
         logging.log(level=logging.INFO, msg=frame)
         logging.log(level=logging.INFO, msg=attributes)
-        logging.log(level=logging.INFO, msg=type(attributes))
+        logging.log(level=logging.INFO, msg=dictionaries['columns'])
