@@ -12,8 +12,8 @@ class S3Parameters:
     Description
     -----------
 
-    This class reads-in the YAML file of this project repository's overarching Amazon S3 (Simple Storage Service)
-    parameters.
+    This class reads-in the YAML file of this project's overarching Amazon S3 (Simple Storage Service)
+    parameters settings.  Parameters such as region code, the names of the source & delivery buckets, etc.
 
     S3 Express One Zone, which has 4 overarching regions
     https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
