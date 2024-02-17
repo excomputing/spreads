@@ -46,12 +46,14 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # Modules
+    import config
     import src.algorithms.interface
     import src.algorithms.nodes
     import src.algorithms.references
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
     import src.functions.cache
+    import src.functions.directories
     import src.functions.service
     import src.s3.keys
     import src.s3.s3_parameters
@@ -59,5 +61,11 @@ if __name__ == '__main__':
     # S3 S3Parameters, Service Instance
     s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
     service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
+
+    # Warehouse
+    storage = config.Config().storage
+    directories = src.functions.directories.Directories()
+    directories.cleanup(path=storage)
+    directories.create(path=storage)
 
     main()
