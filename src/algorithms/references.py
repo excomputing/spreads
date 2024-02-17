@@ -1,5 +1,3 @@
-import typing
-
 import pandas as pd
 
 import src.elements.s3_parameters as s3p
@@ -20,7 +18,7 @@ class References:
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
         # S3 Unload Instance
-        self.__unload = src.s3.unload.Unload(service=self.__service, s3_parameters=self.__s3_parameters)
+        self.__unload = src.s3.unload.Unload(service=self.__service)
 
     def __read(self, filename: str) -> pd.DataFrame:
         """
@@ -29,8 +27,9 @@ class References:
         :return:
         """
 
-        key_name = f'{self.__s3_parameters.references_}{filename}'
-        buffer = self.__unload.exc(key_name=key_name)
+        key_name = f'{self.__s3_parameters.source_references_}{filename}'
+        buffer = self.__unload.exc(
+            bucket_name=self.__s3_parameters.source_bucket_name, key_name=key_name)
 
         try:
             return pd.read_csv(filepath_or_buffer=buffer, header=0, encoding='utf-8')
@@ -59,9 +58,8 @@ class References:
         """
 
         :return:
-          registry: DataFrame
-          stations: DataFrame
-          substances: DataFrame
+          data: DataFrame
+          An integration of (a) substances descriptive data, (b) stations gazetteer data, and (c) telemetric devices registry
         """
 
         registry = self.__read(filename='registry.csv')
