@@ -1,3 +1,6 @@
+"""
+Module persist.py
+"""
 import logging
 
 import numpy as np
@@ -5,10 +8,16 @@ import pandas as pd
 
 
 class Persist:
+    """
+
+    This class exports the daily quantiles calculations of a telemetric device, i.e., of a pollutant, to a JSON file.  The
+    JSON file includes a summary of the underlying raw data's characteristics.
+    """
 
     def __init__(self, references: pd.DataFrame):
         """
-        Constructor
+
+        :param references: 
         """
 
         self.__references = references
@@ -35,6 +44,11 @@ class Persist:
         return data
 
     def __attributes(self, sequence_id) -> dict:
+        """
+
+        :param sequence_id:
+        :return:
+        """
 
         attributes: pd.DataFrame = self.__references.copy().loc[
                                    self.__references['sequence_id'] == sequence_id, :]
@@ -42,6 +56,11 @@ class Persist:
         return attributes.to_dict(orient='records')[0]
 
     def __dictionaries(self, blob: pd.DataFrame) -> dict:
+        """
+
+        :param blob:
+        :return:
+        """
 
         frame = blob.copy()[self.__fields]
 
