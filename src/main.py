@@ -18,11 +18,15 @@ def main():
     logger.info('Spreads')
 
     # The list of keys, i.e., CSV files, that store telemetric data
-    keys = src.s3.keys.Keys(service=service, s3_parameters=s3_parameters)
-    s3_keys: list = keys.particular(prefix=s3_parameters.points_)
+    s3_keys = src.s3.keys.Keys(
+        service=service, s3_parameters=s3_parameters).particular(prefix=s3_parameters.points_)
+
+    # The nodes, i.e., the distinct paths
+    nodes: list = src.algorithms.nodes.Nodes(
+        s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
 
     # The readings
-    src.algorithms.interface.Interface(s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
+    src.algorithms.interface.Interface().exc(nodes=nodes)
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
@@ -38,6 +42,7 @@ if __name__ == '__main__':
 
     # Modules
     import src.algorithms.interface
+    import src.algorithms.nodes
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
     import src.functions.cache
@@ -48,5 +53,6 @@ if __name__ == '__main__':
     # S3 S3Parameters, Service Instance
     s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
     service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
+
 
     main()
