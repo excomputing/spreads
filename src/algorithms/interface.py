@@ -7,6 +7,7 @@ import dask.dataframe as ddf
 import pandas as pd
 
 import src.algorithms.distributions
+import src.algorithms.persist
 
 
 class Interface:
@@ -64,6 +65,8 @@ class Interface:
         :return:
         """
 
+        persist = src.algorithms.persist.Persist(references=references)
+
         for node in nodes:
 
             # A collection of a device's timeseries data; retrieved in parallel
@@ -78,5 +81,4 @@ class Interface:
             data.rename(columns=self.__rename, inplace=True)
 
             # Persist
-            logging.log(level=logging.INFO, msg=references)
-            logging.log(level=logging.INFO, msg=data.head())
+            persist.exc(data=data)
