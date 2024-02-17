@@ -78,5 +78,5 @@ class Interface:
             data.rename(columns=self.__rename, inplace=True)
 
             # Persist
-
+            logging.log(level=logging.INFO, msg=references)
             logging.log(level=logging.INFO, msg=data.head())
