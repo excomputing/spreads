@@ -2,9 +2,13 @@
 Module persist.py
 """
 import logging
+import os.path
 
 import numpy as np
 import pandas as pd
+
+import src.functions.objects
+import config
 
 
 class Persist:
@@ -18,11 +22,12 @@ class Persist:
         """
 
         :param references: Each instance of the references data frame describes the characteristics of a unique sequence of
-        telemetric data.  The details include sequence identification code, the geographic coordinates of the telemetric
-        device, the pollutant being measured, the unit of measure, etc.
+        telemetric data.
         """
 
         self.__references = references
+        self.__storage = config.Config().storage
+        self.__objects = src.functions.objects.Objects()
 
         # The data fields of interest
         self.__fields = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
@@ -69,6 +74,16 @@ class Persist:
         frame = blob.copy()[self.__fields]
 
         return frame.to_dict(orient='tight')
+
+    def __write(self, nodes: dict) -> str:
+
+        dictionary = nodes['attributes']
+
+        message = self.__objects.write(
+            nodes=nodes,
+            path=os.path.join(self.__storage, f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}"))
+
+        return message
 
     def exc(self, data: pd.DataFrame):
         """
