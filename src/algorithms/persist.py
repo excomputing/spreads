@@ -12,9 +12,13 @@ class Persist:
         """
 
         self.__references = references
-
         self.__fields = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
                                'minimum', 'maximum', 'date']
+
+        # Logging: If necessary, set force = True
+        logging.basicConfig(level=logging.INFO, format='%(message)s\n%(asctime)s.%(msecs)03d',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
 
     @staticmethod
     def __epoch(blob: pd.DataFrame) -> pd.DataFrame:
@@ -50,7 +54,7 @@ class Persist:
         sequence_id: int = frame['sequence_id'].unique()[0]
         attributes = self.__attributes(sequence_id=sequence_id)
 
-
-        logging.log(level=logging.INFO, msg=frame)
-        logging.log(level=logging.INFO, msg=attributes)
-        logging.log(level=logging.INFO, msg=dictionaries['columns'])
+        self.__logger.info(msg=frame)
+        self.__logger.info(msg=attributes)
+        self.__logger.info(msg=dictionaries['columns'])
+        self.__logger.info(msg=dictionaries['data'])
