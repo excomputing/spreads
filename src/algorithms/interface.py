@@ -19,8 +19,10 @@ class Interface:
         Constructor
         """
 
+        # The class instance for quantiles calculations
         self.__distributions = src.algorithms.distributions.Distributions()
 
+        # Quantiles settings
         self.__meta = {0.1: float, 0.25: float, 0.5: float, 0.75: float, 0.9: float}
         self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
                          0.75: 'upper_quartile', 0.9: 'upper_decile'}
