@@ -1,3 +1,5 @@
+import os
+
 
 class Config:
 
@@ -7,3 +9,5 @@ class Config:
 
         s3://{bucket}/{prefix}/*.csv
         """
+
+        self.storage = os.path.join(os.getcwd(), 'warehouse')
