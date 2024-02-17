@@ -26,7 +26,7 @@ class Keys:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
-    def particular(self, prefix: str) -> list:
+    def particular(self, prefix: str) -> list[str]:
 
         try:
             dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__s3_parameters.bucket_name, Prefix=prefix)
@@ -39,7 +39,7 @@ class Keys:
 
         return items
 
-    def all(self) -> list:
+    def all(self) -> list[str]:
 
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
