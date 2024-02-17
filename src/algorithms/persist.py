@@ -23,6 +23,8 @@ class Persist:
         """
 
         self.__references = references
+
+        # The data fields of interest
         self.__fields = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
                          'minimum', 'maximum', 'date']
 
@@ -71,7 +73,8 @@ class Persist:
     def exc(self, data: pd.DataFrame):
         """
 
-        :param data:
+        :param data: The daily quantiles & extrema calculations vis-à-vis a telemetric device, i.e., a pollutant,
+        at a specific location.
         :return:
         """
 
