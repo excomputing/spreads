@@ -2,6 +2,8 @@ import logging
 import os
 import sys
 
+import pandas as pd
+
 
 def main():
     """
@@ -25,8 +27,11 @@ def main():
     nodes: list = src.algorithms.nodes.Nodes(
         s3_parameters=s3_parameters).exc(s3_keys=s3_keys)
 
+    references: pd.DataFrame = src.algorithms.references.References(
+        service=service, s3_parameters=s3_parameters).exc()
+
     # The readings
-    src.algorithms.interface.Interface().exc(nodes=nodes)
+    src.algorithms.interface.Interface().exc(nodes=nodes, references=references)
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
@@ -43,6 +48,7 @@ if __name__ == '__main__':
     # Modules
     import src.algorithms.interface
     import src.algorithms.nodes
+    import src.algorithms.references
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
     import src.functions.cache
