@@ -6,6 +6,12 @@ import src.s3.unload
 
 
 class References:
+    """
+
+    Each instance of the references data frame describes the characteristics of a unique sequence of
+    telemetric data.  The details include sequence identification code, the geographic coordinates of
+    the telemetric device, the pollutant being measured, the unit of measure, etc.
+    """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
