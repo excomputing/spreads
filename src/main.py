@@ -23,7 +23,7 @@ def main():
     # The nodes, i.e., the distinct paths
     bucket_name = s3_parameters.source_bucket_name
     s3_keys = src.s3.keys.Keys(
-        service=service, bucket_name=bucket_name).particular(prefix=s3_parameters.source_points_)
+        service=service, bucket_name=bucket_name).particular(prefix=s3_parameters.source_path_)
     nodes: list = src.algorithms.nodes.Nodes().exc(s3_keys=s3_keys, bucket_name=bucket_name)
 
     # References
