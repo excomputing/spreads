@@ -8,6 +8,7 @@ import pandas as pd
 
 import src.algorithms.distributions
 import src.algorithms.persist
+import src.algorithms.structure
 
 
 class Interface:
@@ -65,7 +66,8 @@ class Interface:
         :return:
         """
 
-        persist = src.algorithms.persist.Persist(references=references)
+        structure = src.algorithms.structure.Structure(references=references)
+        persist = src.algorithms.persist.Persist()
 
         for node in nodes:
 
@@ -80,5 +82,8 @@ class Interface:
             data = quantiles.copy().merge(extrema.copy(), on=['sequence_id', 'date'], how='inner')
             data.rename(columns=self.__rename, inplace=True)
 
+            # Structure
+            nodes = structure.exc(data=data)
+
             # Persist
-            persist.exc(data=data)
+            persist.exc(nodes=nodes)
