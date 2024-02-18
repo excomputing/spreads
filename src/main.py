@@ -19,20 +19,15 @@ def main():
     logger = logging.getLogger(__name__)
     logger.info('Spreads')
 
-    # The list of keys, i.e., CSV files, that store telemetric data
-    # The nodes, i.e., the distinct paths
-    bucket_name = s3_parameters.source_bucket_name
-    s3_keys = src.s3.keys.Keys(
-        service=service, bucket_name=bucket_name).particular(prefix=s3_parameters.source_path_)
-    nodes: list = src.algorithms.nodes.Nodes().exc(s3_keys=s3_keys, bucket_name=bucket_name)
+    # Branches
+    branches = src.algorithms.branches.Branches(service=service, s3_parameters=s3_parameters).exc()
 
     # References
-    references: pd.DataFrame = src.algorithms.references.References(
-        service=service, s3_parameters=s3_parameters).exc()
+    references: pd.DataFrame = src.algorithms.references.References(service=service, s3_parameters=s3_parameters).exc()
 
     # Calculate quantiles
-    src.algorithms.interface.Interface(
-        service=service, s3_parameters=s3_parameters).exc(branches=nodes, references=references)
+    src.algorithms.interface.Interface(service=service, s3_parameters=s3_parameters).exc(
+        branches=branches, references=references)
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
@@ -49,14 +44,13 @@ if __name__ == '__main__':
     # Modules
     import config
     import src.algorithms.interface
-    import src.algorithms.nodes
+    import src.algorithms.branches
     import src.algorithms.references
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
     import src.functions.cache
     import src.functions.directories
     import src.functions.service
-    import src.s3.keys
     import src.s3.s3_parameters
 
     # S3 S3Parameters, Service Instance
