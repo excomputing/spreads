@@ -24,7 +24,7 @@ class Ingress:
         """
 
         :param service: A suite of services for interacting with Amazon Web Services.
-        :param bucket_name: the name of the Amazon S3 bucket that a data set is being delivered to.
+        :param bucket_name: The name of the Amazon S3 bucket that a data set is being delivered to.
         :param metadata: The metadata of the files being uploaded.  Note, files of the same content type are expected,
                          assumed.
         """
