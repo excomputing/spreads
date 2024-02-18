@@ -30,26 +30,24 @@ class Persist:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __local(self, nodes: dict) -> str:
+    def __local(self, nodes: dict, name: str) -> str:
         """
 
         :param nodes:
         :return:
         """
-
-        dictionary = nodes['attributes']
-        name = f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}.json"
 
         message = self.__objects.write(nodes=nodes, path=os.path.join(self.__storage, name))
 
         return message
 
-    def exc(self, nodes: dict):
+    def exc(self, nodes: dict, name: str):
         """
 
         :param nodes:
+        :param name:
         :return:
         """
 
-        message = self.__local(nodes=nodes)
+        message = self.__local(nodes=nodes, name=name)
         self.__logger.info(message)
