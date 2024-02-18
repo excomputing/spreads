@@ -31,7 +31,8 @@ def main():
         service=service, s3_parameters=s3_parameters).exc()
 
     # Calculate quantiles
-    src.algorithms.interface.Interface().exc(nodes=nodes, references=references)
+    src.algorithms.interface.Interface(
+        service=service, s3_parameters=s3_parameters).exc(branches=nodes, references=references)
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
