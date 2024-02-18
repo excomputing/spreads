@@ -78,8 +78,8 @@ class Interface:
 
         structure = src.algorithms.structure.Structure(references=references)
         persist = src.algorithms.persist.Persist()
-        upload = src.s3.upload.Upload(
-            service=self.__service, bucket_name=self.__s3_parameters.delivery_bucket_name, metadata=self.__metadata)
+        upload = src.s3.upload.Upload(service=self.__service, bucket_name=self.__s3_parameters.delivery_bucket_name,
+                                      metadata=self.__metadata)
 
         for branch in branches:
 
@@ -87,20 +87,22 @@ class Interface:
             frame: ddf.DataFrame = ddf.read_csv(branch)
 
             # Calculations
-            quantiles = self.__quantiles(frame=frame)
-            extrema = self.__extrema(frame=frame)
+            quantiles: pd.DataFrame = self.__quantiles(frame=frame)
+            extrema: pd.DataFrame = self.__extrema(frame=frame)
 
             # Merge
-            data = quantiles.copy().merge(extrema.copy(), on=['sequence_id', 'date'], how='inner')
+            data: pd.DataFrame = quantiles.copy().merge(extrema.copy(), on=['sequence_id', 'date'], how='inner')
             data.rename(columns=self.__rename, inplace=True)
 
             # Structure
-            nodes = structure.exc(data=data)
+            nodes: dict = structure.exc(data=data)
+
+            # Name
+            dictionary: dict = nodes['attributes']
+            name: str = f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}.json"
 
             # Upload
-            dictionary = nodes['attributes']
-            name = f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}.json"
             upload.bytes(buffer=json.dumps(nodes).encode('utf-8'), key_name=f'{self.__s3_parameters.delivery_path_}/{name}')
 
             # Persist
-            persist.exc(nodes=nodes)
+            persist.exc(nodes=nodes, name=name)
