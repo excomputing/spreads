@@ -10,26 +10,33 @@ class S3Parameters(typing.NamedTuple):
 
     Attributes
     ----------
-    region_name : str
-      The Amazon Web Services region code.
 
-    location_constraint : str
-      The region code of the region that the data is limited to.
+    region_name
+      * The Amazon Web Services region code.
 
-    access_control_list : str
-      Access control list selection.
+    location_constraint
+      * The region code of the region that the data is limited to.
 
-    source_bucket_name : str
-      The Amazon S3 (Simple Storage Service) bucket that hosts this project's data.
+    access_control_list
+      * Access control list selection.
 
-    source_points_ : str
-      The bucket path of the telemetric data.
+    source_bucket_name
+      * The Amazon S3 (Simple Storage Service) bucket that hosts this project's data.
 
-    source_references_ : str
-      The bucket path of the telemetric data references.
+    source_path_
+      * The bucket path of the telemetric data.
 
-    source_n_references : int
-      The exact number of reference documents.
+    source_references_
+      * The bucket path of the telemetric data references.
+
+    source_n_references
+      * The exact number of reference documents.
+
+    delivery_bucket_name
+      * The name of the bucket that the project's calculations will be delivered to
+
+    delivery_path_
+      * The calculations path
     """
 
     region_name: str
