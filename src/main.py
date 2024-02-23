@@ -10,7 +10,9 @@ def main():
     The focus is the daily quantile spreads per station.  Note, the data sets of each
     telemetric device station are stored within a distinct Amazon S3 bucket node.
 
-    Upcoming: README.md Illustration
+    Upcoming:
+        * README.md Illustration
+        * Does the delivery bucket exist?
 
     :return:
     """
@@ -46,6 +48,8 @@ if __name__ == '__main__':
     import src.algorithms.interface
     import src.algorithms.branches
     import src.algorithms.references
+    import src.s3.bucket
+    import src.s3.objects
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
     import src.functions.cache
@@ -62,5 +66,16 @@ if __name__ == '__main__':
     directories = src.functions.directories.Directories()
     directories.cleanup(path=storage)
     directories.create(path=storage)
+
+    # Amazon
+    bucket = src.s3.bucket.Bucket(service=service, location_constraint=s3_parameters.location_constraint,
+                                  bucket_name=s3_parameters.delivery_bucket_name)
+    objects = src.s3.objects.Objects(service=service, bucket_name=s3_parameters.delivery_bucket_name)
+    iterable = objects.filter(prefix=s3_parameters.delivery_path_)
+
+    if bucket.exists():
+        iterable.delete()
+    else:
+        bucket.create()
 
     main()
