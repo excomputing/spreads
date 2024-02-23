@@ -102,7 +102,7 @@ class Interface:
             name: str = f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}.json"
 
             # Upload
-            upload.bytes(buffer=json.dumps(nodes).encode('utf-8'), key_name=f'{self.__s3_parameters.delivery_path_}/{name}')
+            upload.bytes(buffer=json.dumps(nodes).encode('utf-8'), key_name=f'{self.__s3_parameters.delivery_path_}{name}')
 
             # Persist
             persist.exc(nodes=nodes, name=name)
