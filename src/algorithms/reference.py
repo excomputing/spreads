@@ -39,9 +39,9 @@ class Reference:
         :return:
         """
 
-        key_name = f'{self.__s3_parameters.path_int_references}{filename}'
+        key_name = f'{self.__s3_parameters.path_internal_references}{filename}'
         buffer = self.__unload.exc(
-            bucket_name=self.__s3_parameters.bucket_name_int, key_name=key_name)
+            bucket_name=self.__s3_parameters.internal, key_name=key_name)
 
         try:
             return pd.read_csv(filepath_or_buffer=buffer, header=0, encoding='utf-8')
@@ -53,7 +53,8 @@ class Reference:
 
         :return:
           data : DataFrame
-            An integration of (a) substances descriptive data, (b) stations gazetteer data, and (c) telemetric devices registry
+            An integration of (a) substances descriptive data, (b) stations gazetteer data,
+            and (c) telemetric devices registry
         """
 
         reference = self.__read(filename='reference.csv')
