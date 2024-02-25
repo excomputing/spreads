@@ -1,6 +1,3 @@
-import logging
-import os.path
-
 import numpy as np
 import pandas as pd
 
@@ -65,7 +62,7 @@ class Structure:
         :return:
         """
 
-        # Adding an epoch field; milliseconds seconds since ...
+        # Adding an epoch field; milliseconds seconds since 1 January 1970.
         frame: pd.DataFrame = self.__epoch(blob=data.copy())
 
         # The dictionaries of <frame>
