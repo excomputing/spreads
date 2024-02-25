@@ -9,7 +9,7 @@ import boto3
 
 class Service(typing.NamedTuple):
     """
-    The data type class -> Service
+    The data type class ⇾ Service
 
     Attributes
     ----------
@@ -18,7 +18,7 @@ class Service(typing.NamedTuple):
     s3_client: boto3.session.Session.client
         The boto3.client instance, with service & region name settings.
     secrets_manager: boto3.session.Session.client
-        A boto3.client instance for secrets
+        A boto3.client instance for secrets.
     """
 
     s3_resource: boto3.session.Session.resource
