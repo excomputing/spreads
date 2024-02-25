@@ -1,3 +1,6 @@
+"""
+Module main.py
+"""
 import logging
 import os
 import sys
@@ -44,16 +47,19 @@ if __name__ == '__main__':
 
     # Modules
     import config
-    import src.algorithms.interface
     import src.algorithms.branches
+    import src.algorithms.interface
     import src.algorithms.reference
-    import src.s3.bucket
-    import src.s3.objects
+
     import src.elements.s3_parameters as s3p
     import src.elements.service as sr
+
     import src.functions.cache
     import src.functions.directories
     import src.functions.service
+
+    import src.s3.bucket
+    import src.s3.objects
     import src.s3.s3_parameters
 
     # S3 S3Parameters, Service Instance
@@ -68,9 +74,9 @@ if __name__ == '__main__':
 
     # Preparing the externally facing Amazon S3 bucket & path
     bucket = src.s3.bucket.Bucket(service=service, location_constraint=s3_parameters.location_constraint,
-                                  bucket_name=s3_parameters.bucket_name_ext)
-    objects = src.s3.objects.Objects(service=service, bucket_name=s3_parameters.bucket_name_ext)
-    iterable = objects.filter(prefix=s3_parameters.path_ext_quantiles)
+                                  bucket_name=s3_parameters.external)
+    objects = src.s3.objects.Objects(service=service, bucket_name=s3_parameters.external)
+    iterable = objects.filter(prefix=s3_parameters.path_external_quantiles)
 
     if bucket.exists():
         iterable.delete()
