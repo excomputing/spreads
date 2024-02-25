@@ -42,24 +42,6 @@ class References:
         except ImportError as err:
             raise Exception(err) from err
 
-    @staticmethod
-    def __integrate(registry: pd.DataFrame, stations: pd.DataFrame, substances: pd.DataFrame) -> pd.DataFrame:
-        """
-        Integrates the frames such that each record has the details of each distinct
-        sequence identification code.
-
-        :param registry:
-        :param stations:
-        :param substances:
-        :return:
-        """
-
-        frame = registry.merge(stations, how='left', on='station_id')
-        frame = frame.copy().merge(
-            substances.copy()[['pollutant_id', 'substance', 'notation']], how='left', on='pollutant_id')
-
-        return frame
-
     def exc(self) -> pd.DataFrame:
         """
 
@@ -68,10 +50,6 @@ class References:
           An integration of (a) substances descriptive data, (b) stations gazetteer data, and (c) telemetric devices registry
         """
 
-        registry = self.__read(filename='registry.csv')
-        stations = self.__read(filename='stations.csv')
-        substances = self.__read(filename='substances.csv')
+        reference = self.__read(filename='reference.csv')
 
-        data = self.__integrate(registry=registry, stations=stations, substances=substances)
-
-        return data
+        return reference
