@@ -1,3 +1,6 @@
+"""
+Module keys.py
+"""
 import logging
 
 import boto3
@@ -7,12 +10,20 @@ import src.elements.service as sr
 
 
 class Keys:
+    """
+    Class Keys
+
+    Notes
+    -----
+
+    Gets lists of Amazon S3 keys.
+    """
 
     def __init__(self, service: sr.Service, bucket_name: str):
         """
 
-        :param service:
-        :param bucket_name:
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param bucket_name: The name of an Amazon S3 bucket in focus.
         """
 
         self.__bucket_name = bucket_name
@@ -26,6 +37,12 @@ class Keys:
         self.__logger: logging.Logger = logging.getLogger(__name__)
 
     def particular(self, prefix: str) -> list[str]:
+        """
+
+        :param prefix: Amazon S3 (Simple Storage Service) prefix.
+        :return:
+            A list of Amazon S3 (Simple Storage Service) keys.
+        """
 
         try:
             dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__bucket_name, Prefix=prefix)
@@ -39,6 +56,11 @@ class Keys:
         return items
 
     def all(self) -> list[str]:
+        """
+
+        :return:
+            A list of Amazon S3 (Simple Storage Service) keys.
+        """
 
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
