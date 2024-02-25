@@ -20,27 +20,27 @@ class S3Parameters(typing.NamedTuple):
     access_control_list
       * Access control list selection.
 
-    bucket_name_int
+    internal
       * The Amazon S3 (Simple Storage Service) bucket that hosts this project's data.
 
-    path_int_points
+    path_internal_points
       * The bucket path of the telemetric data.
 
-    path_int_references
+    path_internal_references
       * The bucket path of the telemetric data references.
 
-    bucket_name_ext
+    external
       * The name of the bucket that the project's calculations will be delivered to
 
-    path_ext_quantiles
+    path_external_quantiles
       * The calculations path
     """
 
     region_name: str
     location_constraint: str
     access_control_list: str
-    bucket_name_int: str
-    path_int_points: str
-    path_int_references: str
-    bucket_name_ext: str
-    path_ext_quantiles: str
+    internal: str
+    path_internal_points: str
+    path_internal_references: str
+    external: str
+    path_external_quantiles: str
