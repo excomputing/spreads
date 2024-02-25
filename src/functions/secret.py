@@ -1,5 +1,5 @@
 """
-The secret ...
+The secrets
 """
 import json
 
