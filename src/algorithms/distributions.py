@@ -1,8 +1,16 @@
+"""
+Module distributions.py
+"""
 import numpy as np
 import dask.dataframe as ddf
 
 
 class Distributions:
+    """
+    Notes
+    -----
+    Determines the quantiles of a series.
+    """
 
     def __init__(self):
         """
