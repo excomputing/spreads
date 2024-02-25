@@ -18,7 +18,7 @@ class Bucket:
 
         :param service: A suite of services for interacting with Amazon Web Services.
         :param location_constraint: The location constraint of an Amazon S3 (Simple Storage Service) bucket.
-        :param bucket_name: The name of an Amazon S3 bucket in focus
+        :param bucket_name: The name of an Amazon S3 bucket in focus.
         """
 
         self.__location_constraint = location_constraint
