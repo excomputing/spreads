@@ -32,7 +32,7 @@ class Directories:
         elements = [file for _, _, files in os.walk(path) for file in files]
         assert len(elements) == 0, f'Unable to delete all files within path {path}'
 
-        # ... then the directories
+        # Then the directories
         __directories = [os.removedirs(os.path.join(base, directory))
                          for base, directories, _ in os.walk(path, topdown=False)
                          for directory in directories
