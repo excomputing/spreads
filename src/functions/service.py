@@ -11,16 +11,14 @@ import src.functions.serial
 
 class Service:
     """
-    Class Service
-
+    Notes
+    -----
     Auto-login via IAM Identity Centre Single Sign On; beware of
-    machine prerequisite.  Re-visit, vis-à-vis cloud runs.
+    machine prerequisite.  Re-visit, vis-à-vis cloud runs
       * https://docs.aws.amazon.com/signin/latest/userguide/command-line-sign-in.html
 
-
     A S3 resource service
-      * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.\
-            html#boto3.session.Session.resource
+      * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html#boto3.session.Session.resource
     """
 
     def __init__(self, region_name: str):
