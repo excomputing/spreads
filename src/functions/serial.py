@@ -10,7 +10,7 @@ class Serial:
 
     Description
     -----------
-    At present this class reads-in local YAML data files; YAML is a data serialisation language.
+    Presently, this class reads-in local YAML data files; YAML is a data serialisation language.
     """
 
     def __init__(self):
@@ -23,7 +23,7 @@ class Serial:
     def get_dictionary(uri: str) -> dict:
         """
 
-        :param uri: The file string of a local YAML file; path + file name + extension
+        :param uri: The file string of a local YAML file; path + file name + extension.
         :return:
         """
 
