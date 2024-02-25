@@ -30,7 +30,7 @@ class S3Parameters(typing.NamedTuple):
       * The bucket path of the telemetric data references.
 
     external
-      * The name of the bucket that the project's calculations will be delivered to
+      * The name of the bucket that the project's calculations will be delivered to.
 
     path_external_quantiles
       * The calculations path
