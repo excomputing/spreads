@@ -12,7 +12,6 @@ def main():
 
     Upcoming:
         * README.md Illustration
-        * Does the delivery bucket exist?
 
     :return:
     """
@@ -25,7 +24,7 @@ def main():
     branches = src.algorithms.branches.Branches(service=service, s3_parameters=s3_parameters).exc()
 
     # References
-    references: pd.DataFrame = src.algorithms.references.References(service=service, s3_parameters=s3_parameters).exc()
+    references: pd.DataFrame = src.algorithms.reference.Reference(service=service, s3_parameters=s3_parameters).exc()
 
     # Calculate quantiles
     src.algorithms.interface.Interface(service=service, s3_parameters=s3_parameters).exc(
@@ -47,7 +46,7 @@ if __name__ == '__main__':
     import config
     import src.algorithms.interface
     import src.algorithms.branches
-    import src.algorithms.references
+    import src.algorithms.reference
     import src.s3.bucket
     import src.s3.objects
     import src.elements.s3_parameters as s3p
@@ -67,11 +66,11 @@ if __name__ == '__main__':
     directories.cleanup(path=storage)
     directories.create(path=storage)
 
-    # Amazon
+    # Preparing the externally facing Amazon S3 bucket & path
     bucket = src.s3.bucket.Bucket(service=service, location_constraint=s3_parameters.location_constraint,
-                                  bucket_name=s3_parameters.delivery_bucket_name)
-    objects = src.s3.objects.Objects(service=service, bucket_name=s3_parameters.delivery_bucket_name)
-    iterable = objects.filter(prefix=s3_parameters.delivery_path_)
+                                  bucket_name=s3_parameters.bucket_name_ext)
+    objects = src.s3.objects.Objects(service=service, bucket_name=s3_parameters.bucket_name_ext)
+    iterable = objects.filter(prefix=s3_parameters.path_ext_quantiles)
 
     if bucket.exists():
         iterable.delete()
