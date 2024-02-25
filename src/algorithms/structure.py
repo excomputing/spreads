@@ -1,8 +1,16 @@
+"""
+Module structure.py
+"""
 import numpy as np
 import pandas as pd
 
 
 class Structure:
+    """
+    Notes
+    -----
+    Structures data sets in line with candle stick graph expectations.
+    """
 
     def __init__(self, references: pd.DataFrame):
         """
