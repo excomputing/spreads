@@ -13,7 +13,7 @@ class Objects:
 
     Description
     -----------
-    This class reads & writes JSON (JavaScript Object Notation) objects
+    This class reads & writes JSON (JavaScript Object Notation) objects.
     """
 
     def __init__(self):
