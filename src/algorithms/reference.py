@@ -5,7 +5,7 @@ import src.elements.service as sr
 import src.s3.unload
 
 
-class References:
+class Reference:
     """
 
     Each instance of the references data frame describes the characteristics of a unique sequence of
