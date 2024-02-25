@@ -42,10 +42,10 @@ class Branches:
         """
 
         # The list of keys, i.e., CSV files, that store telemetric data
-        # The nodes, i.e., the distinct paths
-        bucket_name = self.__s3_parameters.source_bucket_name
+        # The nodes, i.e., the distinct paths.
+        bucket_name = self.__s3_parameters.internal
 
         keys = src.s3.keys.Keys(service=self.__service, bucket_name=bucket_name)
-        s3_keys = keys.particular(prefix=self.__s3_parameters.source_path_)
+        s3_keys = keys.particular(prefix=self.__s3_parameters.path_internal_points)
 
         return self.__branches(s3_keys=s3_keys, bucket_name=bucket_name)
