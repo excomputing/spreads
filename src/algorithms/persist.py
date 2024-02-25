@@ -10,6 +10,8 @@ import src.functions.objects
 
 class Persist:
     """
+    Notes
+    -----
     This class exports the daily quantiles calculations of a telemetric device, i.e., of a pollutant, to a JSON file.  The
     JSON file includes a summary of the underlying raw data's characteristics.
     """
