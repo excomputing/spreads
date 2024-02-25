@@ -16,14 +16,15 @@ class Branches:
 
     Notes
     -----
-    Determines the distinct paths that host points data within an Amazon S3 bucket
+    Determines the distinct paths that host points data within an Amazon S3 bucket.
     """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
-        :param service:
-        :param s3_parameters:
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
+                              name, buckets, etc.
         """
 
         self.__service = service
@@ -33,8 +34,8 @@ class Branches:
     def __branches(s3_keys: list, bucket_name: str) -> list[str]:
         """
 
-        :param s3_keys:
-        :param bucket_name:
+        :param s3_keys: Amazon S3 file names, which include prefixes.
+        :param bucket_name: The name of an Amazon S3 bucket.
         :return:
         """
 
@@ -48,6 +49,7 @@ class Branches:
         """
 
         :return:
+            A list of distinct paths that host points data within an Amazon S3 bucket.
         """
 
         # The list of keys, i.e., CSV files, that store telemetric data
