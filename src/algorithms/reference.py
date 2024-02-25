@@ -1,3 +1,6 @@
+"""
+Module reference.py
+"""
 import pandas as pd
 
 import src.elements.s3_parameters as s3p
@@ -8,7 +11,10 @@ import src.s3.unload
 class Reference:
     """
 
-    Each instance of the references data frame describes the characteristics of a unique sequence of
+    Notes
+    -----
+
+    Each instance of the reference data frame describes the characteristics of a unique sequence of
     telemetric data.  The details include sequence identification code, the geographic coordinates of
     the telemetric device, the pollutant being measured, the unit of measure, etc.
     """
@@ -29,7 +35,7 @@ class Reference:
     def __read(self, filename: str) -> pd.DataFrame:
         """
 
-        :param filename:
+        :param filename: the name of the Amazon S3 (Simple Storage Service) file being read.
         :return:
         """
 
@@ -46,8 +52,8 @@ class Reference:
         """
 
         :return:
-          data: DataFrame
-          An integration of (a) substances descriptive data, (b) stations gazetteer data, and (c) telemetric devices registry
+          data : DataFrame
+            An integration of (a) substances descriptive data, (b) stations gazetteer data, and (c) telemetric devices registry
         """
 
         reference = self.__read(filename='reference.csv')
