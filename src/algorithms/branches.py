@@ -1,3 +1,6 @@
+"""
+Module branches.py
+"""
 import os
 
 import numpy as np
@@ -9,6 +12,12 @@ import src.s3.keys
 
 
 class Branches:
+    """
+
+    Notes
+    -----
+    Determines the distinct paths that host points data within an Amazon S3 bucket
+    """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
