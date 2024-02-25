@@ -50,9 +50,9 @@ class Streams:
         :param uri: The uniform resource identifier; path + file + extension string.
         :param header: The header row of the `csv` file
         :param usecols: The fields in focus
-        :param dtype: Dictionary of type per field
+        :param dtype: The dictionary of field types.
         :param date_fields: The list of data fields, if any.
-        :param date_format: The date format per date field
+        :param date_format: The date format per date field.
         :return:
         """
 
@@ -74,9 +74,9 @@ class Streams:
         :param uri: The uniform resource identifier; path + file + extension string.
         :param header: The header row of the `csv` file
         :param usecols: The fields in focus
-        :param dtype: Dictionary of type per field
+        :param dtype: The dictionary of field types.
         :param date_fields: The list of data fields, if any.
-        :param date_format: The date format per date field
+        :param date_format: The date format per date field.
         :return:
         """
 
