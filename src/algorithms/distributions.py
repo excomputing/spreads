@@ -22,6 +22,7 @@ class Distributions:
     def quantiles(self, blob: ddf.DataFrame):
         """
 
+        :param blob: A dask data frame of a day's data
         :return:
         """
 
