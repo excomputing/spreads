@@ -35,7 +35,8 @@ class Persist:
     def __local(self, nodes: dict, name: str) -> str:
         """
 
-        :param nodes:
+        :param nodes: The data dictionary of calculations that will be exported to a JSON file.
+        :param name: The name of the file, including its extension.
         :return:
         """
 
@@ -46,8 +47,8 @@ class Persist:
     def exc(self, nodes: dict, name: str):
         """
 
-        :param nodes:
-        :param name:
+        :param nodes: The data dictionary of calculations that will be exported to a JSON file.
+        :param name: The name of the file, including its extension.
         :return:
         """
 
