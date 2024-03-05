@@ -8,7 +8,7 @@ import src.elements.service as sr
 
 class Unload:
     """
-    Unloads from Amazon S3 (Simple Storage Service).
+    Unloads data from Amazon S3 (Simple Storage Service).
     """
 
     def __init__(self, service: sr.Service):
