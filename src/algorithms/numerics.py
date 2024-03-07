@@ -59,7 +59,7 @@ class Numerics:
 
         calc: cudf.DataFrame = self.__data[['sequence_id', 'date', 'measure']].groupby(
             by=['sequence_id', 'date']).agg(['min', 'max'])
-        
+
         calc.reset_index(drop=False, inplace=True, col_level=1,
                          level=['sequence_id', 'date'], col_fill='indices')
 
@@ -74,9 +74,12 @@ class Numerics:
         left: cudf.DataFrame = self.__quantiles()
         logging.log(level=logging.INFO, msg=left['indices'])
         logging.log(level=logging.INFO, msg=left['measure'])
+        logging.log(level=logging.INFO, msg=left['indices'].join(left['measure']))
 
         right:cudf.DataFrame = self.__extrema()
         logging.log(level=logging.INFO, msg=right)
+        logging.log(level=logging.INFO, msg=right['indices'].join(right['measure']))
 
-        # calculations = left.copy().merge(right.copy(), on=['sequence_id', 'date'], how='inner')
-        # logging.log(level=logging.INFO, msg=calculations)
+        calculations = left.copy().merge(right.copy(), 
+                                         on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
+        logging.log(level=logging.INFO, msg=calculations)
