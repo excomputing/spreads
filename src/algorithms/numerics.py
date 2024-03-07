@@ -47,7 +47,7 @@ class Numerics:
         calc = blob.groupby(by=['sequence_id', 'date']).agg(
             [lower_decile, lower_quartile, median, upper_quartile, upper_decile])
         
-        calc.reset_index(drop=False, inplace=True)
+        calc.reset_index(drop=False, inplace=True, level='sequence_id')
 
         return calc
 
