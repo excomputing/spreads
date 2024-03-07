@@ -69,9 +69,8 @@ class Numerics:
         :return
         """
 
-        left = self.__quantiles()
-        print(type(left))
-        print(left)
+        left: cudf.DataFrame = self.__quantiles()
+        logging.log(level=logging.INFO, msg=left)
 
         right:cudf.DataFrame = self.__extrema()
         logging.log(level=logging.INFO, msg=right)
