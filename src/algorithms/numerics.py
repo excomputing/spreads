@@ -72,7 +72,8 @@ class Numerics:
         """
 
         left: cudf.DataFrame = self.__quantiles()
-        logging.log(level=logging.INFO, msg=left)
+        logging.log(level=logging.INFO, msg=left['indices'])
+        logging.log(level=logging.INFO, msg=left['measure'])
 
         right:cudf.DataFrame = self.__extrema()
         logging.log(level=logging.INFO, msg=right)
