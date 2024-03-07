@@ -8,6 +8,7 @@ import pandas as pd
 import json
 
 import src.algorithms.distributions
+import src.algorithms.numerics
 import src.algorithms.persist
 import src.algorithms.structure
 import src.elements.service as sr
@@ -86,6 +87,7 @@ class Interface:
 
             # A collection of a device's timeseries data; retrieved in parallel
             frame: ddf.DataFrame = ddf.read_csv(branch)
+            src.algorithms.numerics.Numerics(frame=frame.compute(scheduler="processes")).exc()
 
             # Calculations
             quantiles: pd.DataFrame = self.__quantiles(frame=frame)
@@ -103,8 +105,8 @@ class Interface:
             name: str = f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}.json"
 
             # Upload
-            upload.bytes(buffer=json.dumps(nodes).encode('utf-8'),
-                         key_name=f'{self.__s3_parameters.path_external_quantiles}{name}')
+            # upload.bytes(buffer=json.dumps(nodes).encode('utf-8'),
+            #              key_name=f'{self.__s3_parameters.path_external_quantiles}{name}')
 
             # Persist
-            persist.exc(nodes=nodes, name=name)
+            # persist.exc(nodes=nodes, name=name)
