@@ -42,12 +42,11 @@ class Numerics:
         upper_quartile = lambda x: x.quantile(0.75); upper_quartile.__name__ = 'upper_quartile'
         upper_decile = lambda x: x.quantile(0.9); upper_decile.__name__ = 'upper_decile'
 
-        blob = self.__data.copy()[['sequence_id', 'date', 'measure']]
-        
+        blob = self.__data.copy()[['sequence_id', 'date', 'measure']]        
         calc = blob.groupby(by=['sequence_id', 'date']).agg(
             [lower_decile, lower_quartile, median, upper_quartile, upper_decile])
         
-        calc.reset_index(drop=False, inplace=True, level=1)
+        calc.reset_index(drop=False, inplace=True, col_level=1)
 
         return calc
 
