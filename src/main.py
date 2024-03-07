@@ -44,6 +44,8 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO, format='%(message)s\n%(asctime)s.%(msecs)03d',
                         datefmt='%Y-%m-%d %H:%M:%S')
+    
+    os.environ['CUDA_VISIBLE_DEVICES']='0'
 
     # Modules
     import config
