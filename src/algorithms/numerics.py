@@ -58,6 +58,8 @@ class Numerics:
 
         calc: cudf.DataFrame = self.__data[['sequence_id', 'date', 'measure']].groupby(
             by=['sequence_id', 'date']).agg(['min', 'max'])
+        
+        calc.reset_index(drop=False, inplace=True, col_level=1)
 
         return calc
 
