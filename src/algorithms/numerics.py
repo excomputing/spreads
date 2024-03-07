@@ -72,14 +72,11 @@ class Numerics:
         """
 
         left: cudf.DataFrame = self.__quantiles()
-        logging.log(level=logging.INFO, msg=left['indices'])
-        logging.log(level=logging.INFO, msg=left['measure'])
-        logging.log(level=logging.INFO, msg=left['indices'].join(left['measure']))
-
+        logging.log(level=logging.INFO, msg=left)
+        
         right:cudf.DataFrame = self.__extrema()
         logging.log(level=logging.INFO, msg=right)
-        logging.log(level=logging.INFO, msg=right['indices'].join(right['measure']))
 
-        calculations = left.copy().merge(right.copy(), 
-                                         on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
+        calculations = left.copy().merge(
+            right.copy(), on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
         logging.log(level=logging.INFO, msg=calculations)
