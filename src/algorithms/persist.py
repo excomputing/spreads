@@ -32,18 +32,6 @@ class Persist:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __local(self, nodes: dict, name: str) -> str:
-        """
-
-        :param nodes: The data dictionary of calculations that will be exported to a JSON file.
-        :param name: The name of the file, including its extension.
-        :return:
-        """
-
-        message = self.__objects.write(nodes=nodes, path=os.path.join(self.__storage, name))
-
-        return message
-
     def exc(self, nodes: dict, name: str):
         """
 
@@ -52,5 +40,5 @@ class Persist:
         :return:
         """
 
-        message = self.__local(nodes=nodes, name=name)
-        self.__logger.info(message)
+        message: str = self.__objects.write(nodes=nodes, path=os.path.join(self.__storage, name))
+        self.__logger.info(msg=message)
