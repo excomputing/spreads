@@ -75,5 +75,5 @@ class Numerics:
         right:cudf.DataFrame = self.__extrema()
         logging.log(level=logging.INFO, msg=right)
 
-        # calculations = left.copy().merge(right.copy(), on=['sequence_id', 'date'], how='inner')
-        # logging.log(level=logging.INFO, msg=calculations)
+        calculations = left.copy().merge(right.copy(), on=['sequence_id', 'date'], how='inner')
+        logging.log(level=logging.INFO, msg=calculations)
