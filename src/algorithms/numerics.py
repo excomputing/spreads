@@ -46,7 +46,8 @@ class Numerics:
         calc = blob.groupby(by=['sequence_id', 'date']).agg(
             [lower_decile, lower_quartile, median, upper_quartile, upper_decile])
         
-        calc.reset_index(drop=False, inplace=True, col_level=1)
+        calc.reset_index(drop=False, inplace=True, col_level=1, 
+                         level=['sequence_id', 'date'], col_fill='indices')
 
         return calc
 
@@ -59,7 +60,8 @@ class Numerics:
         calc: cudf.DataFrame = self.__data[['sequence_id', 'date', 'measure']].groupby(
             by=['sequence_id', 'date']).agg(['min', 'max'])
         
-        calc.reset_index(drop=False, inplace=True, col_level=1)
+        calc.reset_index(drop=False, inplace=True, col_level=1,
+                         level=['sequence_id', 'date'], col_fill='indices')
 
         return calc
 
@@ -75,5 +77,5 @@ class Numerics:
         right:cudf.DataFrame = self.__extrema()
         logging.log(level=logging.INFO, msg=right)
 
-        calculations = left.copy().merge(right.copy(), on=['sequence_id', 'date'], how='inner')
-        logging.log(level=logging.INFO, msg=calculations)
+        # calculations = left.copy().merge(right.copy(), on=['sequence_id', 'date'], how='inner')
+        # logging.log(level=logging.INFO, msg=calculations)
