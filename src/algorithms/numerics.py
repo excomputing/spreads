@@ -64,6 +64,20 @@ class Numerics:
                          level=['sequence_id', 'date'], col_fill='indices')
 
         return calc
+    
+    def __epoch(x: cudf.Series) -> np.array:
+        """
+
+        :param blob:
+        :return:
+        """
+
+        
+
+        nanoseconds = cudf.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
+        milliseconds = (nanoseconds / (10 ** 6)).astype(np.longlong)
+
+        return milliseconds.array
 
     def exc(self):
         """
@@ -80,3 +94,9 @@ class Numerics:
         calculations = left.copy().merge(
             right.copy(), on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
         logging.log(level=logging.INFO, msg=calculations)
+
+
+        x = calculations.to_pandas()
+        logging.log(level=logging.INFO, msg=x)
+        logging.log(level=logging.INFO, msg=x.columns.get_level_values(1))
+
