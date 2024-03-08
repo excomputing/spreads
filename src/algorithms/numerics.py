@@ -85,16 +85,20 @@ class Numerics:
         """
 
         # Quantiles & Extrema
-        left: cudf.DataFrame = self.__quantiles()        
-        right:cudf.DataFrame = self.__extrema()
-        calculations = left.copy().merge(
-            right.copy(), on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
+        quantiles: cudf.DataFrame = self.__quantiles()        
+        extrema:cudf.DataFrame = self.__extrema()
+        calculations = quantiles.copy().merge(
+            extrema.copy(), on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
         
         # Transform to a pandas data frame
-        x = calculations.to_pandas()
-        y = x.set_axis(labels=x.columns.get_level_values(level=1), axis=1)
-        y.rename(columns={'min': 'minimum', 'max': 'maximum'}, inplace=True)
-        y.loc[:, 'epochmilli'] = self.__epoch(x=y['date'])
-        logging.log(level=logging.INFO, msg=y)
+        values = calculations.to_pandas()
+        numbers = values.set_axis(labels=values.columns.get_level_values(level=1), axis=1)
 
-        return y
+        # Rename fields
+        numbers.rename(columns={'min': 'minimum', 'max': 'maximum'}, inplace=True)
+
+        # Append an epoch field
+        numbers.loc[:, 'epochmilli'] = self.__epoch(x=numbers['date'])
+        logging.log(level=logging.INFO, msg=numbers)
+
+        return numbers
