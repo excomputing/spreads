@@ -62,17 +62,17 @@ class Numerics:
 
         calc.reset_index(drop=False, inplace=True, col_level=1,
                          level=['sequence_id', 'date'], col_fill='indices')
+        calc.rename(columns={'min': 'minimum', 'max': 'maximum'})
 
         return calc
     
     def __epoch(self, x: pd.Series) -> np.ndarray:
         """
+        Adding an epoch field; milliseconds seconds since 1 January 1970.
 
         :param blob:
         :return:
-        """
-
-        
+        """        
 
         nanoseconds: pd.Series[int] = pd.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
         milliseconds: pd.Series[int] = (nanoseconds / (10 ** 6)).astype(np.longlong)
