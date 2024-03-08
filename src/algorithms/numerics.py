@@ -62,7 +62,6 @@ class Numerics:
 
         calc.reset_index(drop=False, inplace=True, col_level=1,
                          level=['sequence_id', 'date'], col_fill='indices')
-        calc.rename(columns={'min': 'minimum', 'max': 'maximum'})
 
         return calc
     
@@ -99,6 +98,7 @@ class Numerics:
         # ... set_axis()  & list(x.columns.get_level_values(1))
         x = calculations.to_pandas()
         y = x.set_axis(labels=x.columns.get_level_values(level=1), axis=1)
+        y.rename(columns={'min': 'minimum', 'max': 'maximum'}, inplace=True)
         y.loc[:, 'epochmilli'] = self.__epoch(x=y['date'])
         logging.log(level=logging.INFO, msg=y)
 
