@@ -95,8 +95,8 @@ class Numerics:
             right.copy(), on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
         logging.log(level=logging.INFO, msg=calculations)
 
-
+        # Continue developing ...
+        # ... set_axis()  & list(x.columns.get_level_values(1))
         x = calculations.to_pandas()
         logging.log(level=logging.INFO, msg=x)
         logging.log(level=logging.INFO, msg=x.columns.get_level_values(1))
-
