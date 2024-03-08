@@ -10,8 +10,10 @@ class Config:
         s3://{bucket}/{prefix}/*.csv
         """
 
+        # Local results storage area
         self.storage = os.path.join(os.getcwd(), 'warehouse')
 
+        # The metadata of the resulting JSON files.
         self.metadata = {
             'attributes': 'Brief [telemetric device] raw data source details.',
             'columns': 'The columns of each data instance.',
