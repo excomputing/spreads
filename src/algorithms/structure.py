@@ -71,7 +71,8 @@ class Structure:
         """
 
         # Adding an epoch field; milliseconds seconds since 1 January 1970.
-        frame: pd.DataFrame = self.__epoch(blob=data.copy())
+        # frame: pd.DataFrame = self.__epoch(blob=data.copy())
+        frame = data.copy()
 
         # The dictionaries of <frame>
         dictionaries = self.__dictionaries(blob=frame)
