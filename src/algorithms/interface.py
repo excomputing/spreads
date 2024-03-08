@@ -39,36 +39,7 @@ class Interface:
         self.__distributions = src.algorithms.distributions.Distributions()
         self.__meta = {0.1: float, 0.25: float, 0.5: float, 0.75: float, 0.9: float}
         self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
-                         0.75: 'upper_quartile', 0.9: 'upper_decile'}
-
-    def __quantiles(self, frame: ddf.DataFrame) -> pd.DataFrame:
-        """
-
-        :param frame:
-        :return:
-        """
-
-        computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
-            by=['sequence_id', 'date']).apply(self.__distributions.quantiles, meta=self.__meta)
-        content: pd.DataFrame = computations.compute(scheduler='processes')
-        content.reset_index(drop=False, inplace=True)
-
-        return content
-
-    @staticmethod
-    def __extrema(frame: ddf.DataFrame) -> pd.DataFrame:
-        """
-
-        :param frame:
-        :return:
-        """
-
-        computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
-            by=['sequence_id', 'date']).agg(minimum=('measure', min), maximum=('measure', max))
-        content: pd.DataFrame = computations.compute(scheduler='processes')
-        content.reset_index(drop=False, inplace=True)
-
-        return content
+                         0.75: 'upper_quartile', 0.9: 'upper_decile'}    
 
     def exc(self, branches: list[str], references: pd.DataFrame):
         """
