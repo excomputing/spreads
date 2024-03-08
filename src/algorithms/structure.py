@@ -72,13 +72,13 @@ class Structure:
 
         # Adding an epoch field; milliseconds seconds since 1 January 1970.
         # frame: pd.DataFrame = self.__epoch(blob=data.copy())
-        frame = data.copy()
+        # frame = data.copy()
 
         # The dictionaries of <frame>
-        dictionaries = self.__dictionaries(blob=frame)
+        dictionaries = self.__dictionaries(blob=data)
 
         # The attributes of the data encoded by <frame>
-        sequence_id: int = frame['sequence_id'].unique()[0]
+        sequence_id: int = data['sequence_id'].unique()[0]
         attributes = self.__attributes(sequence_id=sequence_id)
 
         # The required JSON structure
