@@ -98,5 +98,5 @@ class Numerics:
         # Continue developing ...
         # ... set_axis()  & list(x.columns.get_level_values(1))
         x = calculations.to_pandas()
-        logging.log(level=logging.INFO, msg=x)
-        logging.log(level=logging.INFO, msg=x.columns.get_level_values(1))
+        y = x.set_axis(labels=x.columns.get_level_values(level=1), axis=1)
+        logging.log(level=logging.INFO, msg=y)
