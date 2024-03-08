@@ -11,7 +11,7 @@ import pandas as pd
 def main():
     """
     The focus is the daily quantile spreads per station.  Note, the data sets of each
-    telemetric device station are stored within a distinct Amazon S3 bucket node.
+    telemetric device station are stored within a distinct Amazon S3 bucket branch.
 
     Upcoming:
         * README.md Illustration
@@ -45,6 +45,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(message)s\n%(asctime)s.%(msecs)03d',
                         datefmt='%Y-%m-%d %H:%M:%S')
     
+    # Activate graphics processing units
     os.environ['CUDA_VISIBLE_DEVICES']='0'
 
     # Modules
