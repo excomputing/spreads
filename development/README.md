@@ -35,30 +35,6 @@ Similarly, Visual Studio Code as its container attachment instructions; study [A
 
 <br>
 
-### Local
-
-Beforehand update the `base` **`conda`** environment
-
-```shell
-conda update -n base -c anaconda conda
-```
-
-The local virtual environment can be built via **environment.yml**
-
-```shell
-conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
-```
-
-which uses the same **requirements.txt** as Dockerfile.  If the environment exists, i.e., the aim is to replace an
-existing `pollutants` environment, run
-
-```shell
-conda env remove --name pollutants
-```
-
-first.
-
-<br>
 
 ## Development Notes
 
