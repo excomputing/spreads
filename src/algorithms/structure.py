@@ -1,7 +1,7 @@
 """
 Module structure.py
 """
-import numpy as np
+
 import pandas as pd
 
 
@@ -19,25 +19,11 @@ class Structure:
         telemetric data.
         """
 
-        self.__references = references
+        self.__references: pd.DataFrame = references
 
         # The data fields of interest for the spreads graphs
-        self.__fields = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
-                         'minimum', 'maximum', 'date']
-
-    @staticmethod
-    def __epoch(blob: pd.DataFrame) -> pd.DataFrame:
-        """
-
-        :param blob:
-        :return:
-        """
-
-        data = blob.copy()
-        nanoseconds = pd.to_datetime(data.copy()['date'], format='%Y-%m-%d').astype(np.int64)
-        data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
-
-        return data
+        self.__fields: list[str] = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 
+                                    'upper_quartile', 'upper_decile', 'minimum', 'maximum', 'date']
 
     def __attributes(self, sequence_id) -> dict:
         """
@@ -69,10 +55,6 @@ class Structure:
         at a specific location.
         :return:
         """
-
-        # Adding an epoch field; milliseconds seconds since 1 January 1970.
-        # frame: pd.DataFrame = self.__epoch(blob=data.copy())
-        # frame = data.copy()
 
         # The dictionaries of <frame>
         dictionaries = self.__dictionaries(blob=data)
