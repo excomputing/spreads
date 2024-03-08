@@ -30,15 +30,10 @@ class Interface:
                               name, buckets, etc.
         """
 
-        self.__service = service
-        self.__s3_parameters = s3_parameters
+        self.__service: sr.Service = service
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
-        self.__metadata = config.Config().metadata
-
-        # The class instance for quantiles calculations, etc.
-        # self.__distributions = src.algorithms.distributions.Distributions()
-        # self.__meta = {0.1: float, 0.25: float, 0.5: float, 0.75: float, 0.9: float}
-        # self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median', 0.75: 'upper_quartile', 0.9: 'upper_decile'}    
+        self.__metadata: dict[str, str] = config.Config().metadata
 
     def exc(self, branches: list[str], references: pd.DataFrame):
         """
