@@ -1,7 +1,6 @@
 """
 Module interface.py
 """
-import logging
 
 import dask.dataframe as ddf
 import pandas as pd
@@ -38,8 +37,8 @@ class Interface:
     def exc(self, branches: list[str], references: pd.DataFrame):
         """
 
-        :param branches:
-        :param references:
+        :param branches: The Amazon S3 bucket branches, each branch is associated with a single telemetric device station/pollutant
+        :param references: The inventory of station/telemetric device/pollutant metadata.
         :return:
         """
 
