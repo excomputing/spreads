@@ -65,7 +65,7 @@ class Numerics:
 
         return calc
     
-    def __epoch(x: cudf.Series) -> np.array:
+    def __epoch(self, x: pd.Series) -> np.ndarray:
         """
 
         :param blob:
@@ -74,8 +74,8 @@ class Numerics:
 
         
 
-        nanoseconds = cudf.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
-        milliseconds = (nanoseconds / (10 ** 6)).astype(np.longlong)
+        nanoseconds: pd.Series[int] = pd.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
+        milliseconds: pd.Series[int] = (nanoseconds / (10 ** 6)).astype(np.longlong)
 
         return milliseconds.array
 
@@ -99,4 +99,5 @@ class Numerics:
         # ... set_axis()  & list(x.columns.get_level_values(1))
         x = calculations.to_pandas()
         y = x.set_axis(labels=x.columns.get_level_values(level=1), axis=1)
+        y.loc[:, 'epochmilli'] = self.__epoch(x=y['date'])
         logging.log(level=logging.INFO, msg=y)
