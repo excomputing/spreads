@@ -36,10 +36,9 @@ class Interface:
         self.__metadata = config.Config().metadata
 
         # The class instance for quantiles calculations, etc.
-        self.__distributions = src.algorithms.distributions.Distributions()
-        self.__meta = {0.1: float, 0.25: float, 0.5: float, 0.75: float, 0.9: float}
-        self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
-                         0.75: 'upper_quartile', 0.9: 'upper_decile'}    
+        # self.__distributions = src.algorithms.distributions.Distributions()
+        # self.__meta = {0.1: float, 0.25: float, 0.5: float, 0.75: float, 0.9: float}
+        # self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median', 0.75: 'upper_quartile', 0.9: 'upper_decile'}    
 
     def exc(self, branches: list[str], references: pd.DataFrame):
         """
@@ -68,8 +67,8 @@ class Interface:
             name: str = f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}.json"
 
             # Upload
-            # upload.bytes(buffer=json.dumps(nodes).encode('utf-8'),
-            #              key_name=f'{self.__s3_parameters.path_external_quantiles}{name}')
+            upload.bytes(buffer=json.dumps(nodes).encode('utf-8'),
+                         key_name=f'{self.__s3_parameters.path_external_quantiles}{name}')
 
             # Persist
-            # persist.exc(nodes=nodes, name=name)
+            persist.exc(nodes=nodes, name=name)
