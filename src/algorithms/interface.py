@@ -32,6 +32,7 @@ class Interface:
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
+        # The metadata of the resulting JSON files.
         self.__metadata: dict[str, str] = config.Config().metadata
 
     def exc(self, branches: list[str], references: pd.DataFrame):
