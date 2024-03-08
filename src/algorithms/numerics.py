@@ -29,7 +29,7 @@ class Numerics:
         self.__dictionary = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
                              0.75: 'upper_quartile', 0.9: 'upper_decile'}
 
-    def __quantiles(self):
+    def __quantiles(self) -> cudf.DataFrame:
         """
         Unfortunately groupby.quantile(q=np.array(...)) is not yet functioning
         
@@ -51,7 +51,7 @@ class Numerics:
 
         return calc
 
-    def __extrema(self):
+    def __extrema(self) -> cudf.DataFrame:
         """
         
         :return
@@ -79,7 +79,7 @@ class Numerics:
 
         return milliseconds.array
 
-    def exc(self):
+    def exc(self) -> pd.DataFrame:
         """
         
         :return
@@ -101,3 +101,5 @@ class Numerics:
         y = x.set_axis(labels=x.columns.get_level_values(level=1), axis=1)
         y.loc[:, 'epochmilli'] = self.__epoch(x=y['date'])
         logging.log(level=logging.INFO, msg=y)
+
+        return y
