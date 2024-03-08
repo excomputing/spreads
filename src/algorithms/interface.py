@@ -60,14 +60,6 @@ class Interface:
             frame: ddf.DataFrame = ddf.read_csv(branch)
             data: pd.DataFrame = src.algorithms.numerics.Numerics(frame=frame.compute(scheduler="processes")).exc()
 
-            # Calculations
-            # quantiles: pd.DataFrame = self.__quantiles(frame=frame)
-            # extrema: pd.DataFrame = self.__extrema(frame=frame)
-
-            # Merge
-            # data: pd.DataFrame = quantiles.copy().merge(extrema.copy(), on=['sequence_id', 'date'], how='inner')
-            # data.rename(columns=self.__rename, inplace=True)
-
             # Structure
             nodes: dict = structure.exc(data=data)
 
