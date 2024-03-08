@@ -20,30 +20,28 @@ class Numerics:
         :param frame: A telemetric device's time series.
         """
 
-        self.__data = cudf.from_pandas(frame)
+        self.__data: cudf.DataFrame = cudf.from_pandas(frame)
 
-        # The quantile points
-        self.__decimals: np.ndarray[float] = np.array([0.1, 0.25, 0.5, 0.75, 0.9])
-
-        # Dictionary
-        self.__dictionary = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
-                             0.75: 'upper_quartile', 0.9: 'upper_decile'}
 
     def __quantiles(self) -> cudf.DataFrame:
         """
-        Unfortunately groupby.quantile(q=np.array(...)) is not yet functioning
+        Determines the daily quantiles of a series.  Unfortunately, groupby.quantile(q=np.array(...)) is still
+        under development; re-write this function when it is available.
         
-        :return
+        :return:
+            A CUDF data frame of quantiles
         """
 
+        # The quantiles equations
         lower_decile = lambda x: x.quantile(0.1); lower_decile.__name__ = 'lower_decile'
         lower_quartile = lambda x: x.quantile(0.25); lower_quartile.__name__ = 'lower_quartile'
         median = lambda x: x.quantile(0.5); median.__name__ = 'median'
         upper_quartile = lambda x: x.quantile(0.75); upper_quartile.__name__ = 'upper_quartile'
         upper_decile = lambda x: x.quantile(0.9); upper_decile.__name__ = 'upper_decile'
 
-        blob = self.__data.copy()[['sequence_id', 'date', 'measure']]        
-        calc = blob.groupby(by=['sequence_id', 'date']).agg(
+        # Calculating per sequence date
+        blob: cudf.DataFrame = self.__data.copy()[['sequence_id', 'date', 'measure']]        
+        calc: cudf.DataFrame = blob.groupby(by=['sequence_id', 'date']).agg(
             [lower_decile, lower_quartile, median, upper_quartile, upper_decile])
         
         calc.reset_index(drop=False, inplace=True, col_level=1, 
@@ -53,8 +51,10 @@ class Numerics:
 
     def __extrema(self) -> cudf.DataFrame:
         """
+        Determines each day's minimum & maximum measurements, per sequence.
         
-        :return
+        :return:
+            A CUDF data frame of extrema
         """
 
         calc: cudf.DataFrame = self.__data[['sequence_id', 'date', 'measure']].groupby(
@@ -84,18 +84,13 @@ class Numerics:
         :return
         """
 
-        left: cudf.DataFrame = self.__quantiles()
-        logging.log(level=logging.INFO, msg=left)
-        
+        # Quantiles & Extrema
+        left: cudf.DataFrame = self.__quantiles()        
         right:cudf.DataFrame = self.__extrema()
-        logging.log(level=logging.INFO, msg=right)
-
         calculations = left.copy().merge(
             right.copy(), on=[('indices', 'sequence_id'), ('indices', 'date')], how='inner')
-        logging.log(level=logging.INFO, msg=calculations)
-
-        # Continue developing ...
-        # ... set_axis()  & list(x.columns.get_level_values(1))
+        
+        # Transform to a pandas data frame
         x = calculations.to_pandas()
         y = x.set_axis(labels=x.columns.get_level_values(level=1), axis=1)
         y.rename(columns={'min': 'minimum', 'max': 'maximum'}, inplace=True)
