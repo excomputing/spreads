@@ -1,18 +1,18 @@
 """
 Module interface.py
 """
-import logging
 
 import dask.dataframe as ddf
 import pandas as pd
 import json
 
-import src.algorithms.distributions
+import src.algorithms.numerics
 import src.algorithms.persist
 import src.algorithms.structure
 import src.elements.service as sr
 import src.elements.s3_parameters as s3p
 import src.s3.upload
+
 import config
 
 
@@ -24,55 +24,22 @@ class Interface:
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
-        :param service:
-        :param s3_parameters:
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
+                              name, buckets, etc.
         """
 
-        self.__service = service
-        self.__s3_parameters = s3_parameters
+        self.__service: sr.Service = service
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
-        self.__metadata = config.Config().metadata
-
-        # The class instance for quantiles calculations, etc.
-        self.__distributions = src.algorithms.distributions.Distributions()
-        self.__meta = {0.1: float, 0.25: float, 0.5: float, 0.75: float, 0.9: float}
-        self.__rename = {0.1: 'lower_decile', 0.25: 'lower_quartile', 0.5: 'median',
-                         0.75: 'upper_quartile', 0.9: 'upper_decile'}
-
-    def __quantiles(self, frame: ddf.DataFrame) -> pd.DataFrame:
-        """
-
-        :param frame:
-        :return:
-        """
-
-        computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
-            by=['sequence_id', 'date']).apply(self.__distributions.quantiles, meta=self.__meta)
-        content: pd.DataFrame = computations.compute(scheduler='processes')
-        content.reset_index(drop=False, inplace=True)
-
-        return content
-
-    @staticmethod
-    def __extrema(frame: ddf.DataFrame) -> pd.DataFrame:
-        """
-
-        :param frame:
-        :return:
-        """
-
-        computations: ddf.DataFrame = frame[['sequence_id', 'date', 'measure']].groupby(
-            by=['sequence_id', 'date']).agg(minimum=('measure', min), maximum=('measure', max))
-        content: pd.DataFrame = computations.compute(scheduler='processes')
-        content.reset_index(drop=False, inplace=True)
-
-        return content
+        # The metadata of the resulting JSON files.
+        self.__metadata: dict[str, str] = config.Config().metadata
 
     def exc(self, branches: list[str], references: pd.DataFrame):
         """
 
-        :param branches:
-        :param references:
+        :param branches: The Amazon S3 bucket branches, each branch is associated with a single telemetric device station/pollutant
+        :param references: The inventory of station/telemetric device/pollutant metadata.
         :return:
         """
 
@@ -85,14 +52,7 @@ class Interface:
 
             # A collection of a device's timeseries data; retrieved in parallel
             frame: ddf.DataFrame = ddf.read_csv(branch)
-
-            # Calculations
-            quantiles: pd.DataFrame = self.__quantiles(frame=frame)
-            extrema: pd.DataFrame = self.__extrema(frame=frame)
-
-            # Merge
-            data: pd.DataFrame = quantiles.copy().merge(extrema.copy(), on=['sequence_id', 'date'], how='inner')
-            data.rename(columns=self.__rename, inplace=True)
+            data: pd.DataFrame = src.algorithms.numerics.Numerics(frame=frame.compute(scheduler="processes")).exc()
 
             # Structure
             nodes: dict = structure.exc(data=data)

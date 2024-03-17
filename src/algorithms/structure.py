@@ -1,7 +1,7 @@
 """
 Module structure.py
 """
-import numpy as np
+
 import pandas as pd
 
 
@@ -19,25 +19,11 @@ class Structure:
         telemetric data.
         """
 
-        self.__references = references
+        self.__references: pd.DataFrame = references
 
         # The data fields of interest for the spreads graphs
-        self.__fields = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 'upper_quartile', 'upper_decile',
-                         'minimum', 'maximum', 'date']
-
-    @staticmethod
-    def __epoch(blob: pd.DataFrame) -> pd.DataFrame:
-        """
-
-        :param blob:
-        :return:
-        """
-
-        data = blob.copy()
-        nanoseconds = pd.to_datetime(data.copy()['date'], format='%Y-%m-%d').astype(np.int64)
-        data.loc[:, 'epochmilli'] = (nanoseconds / (10 ** 6)).astype(np.longlong)
-
-        return data
+        self.__fields: list[str] = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 
+                                    'upper_quartile', 'upper_decile', 'minimum', 'maximum', 'date']
 
     def __attributes(self, sequence_id) -> dict:
         """
@@ -70,14 +56,11 @@ class Structure:
         :return:
         """
 
-        # Adding an epoch field; milliseconds seconds since 1 January 1970.
-        frame: pd.DataFrame = self.__epoch(blob=data.copy())
-
         # The dictionaries of <frame>
-        dictionaries = self.__dictionaries(blob=frame)
+        dictionaries = self.__dictionaries(blob=data)
 
         # The attributes of the data encoded by <frame>
-        sequence_id: int = frame['sequence_id'].unique()[0]
+        sequence_id: int = data['sequence_id'].unique()[0]
         attributes = self.__attributes(sequence_id=sequence_id)
 
         # The required JSON structure

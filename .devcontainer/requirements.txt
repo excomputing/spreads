@@ -1,15 +1,6 @@
-dask[complete]>=2023.11
-dask-expr
-graphviz
 boto3
 botocore
-s3fs>=2024.*
-scikit-learn
-numpy>=1.25.*
-pandas>=2.0.*
-scipy>=1.11.*
-requests>=2.31.*
-PyYAML
+s3fs
 pytest
 coverage
 pytest-cov
