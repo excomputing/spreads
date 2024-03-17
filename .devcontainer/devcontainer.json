@@ -1,25 +1,32 @@
-// Formatting: https://aka.ms/devcontainer.json.
-// Configuration README: https://github.com/devcontainers/templates/tree/main/src/python
+/*
+Formatting: https://aka.ms/devcontainer.json.
+Configuration README: https://github.com/devcontainers/templates/tree/main/src/python
+*/
 {
   "name": "Python 3",
 
   // Image
-  // "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bookworm"
+  "image": "nvcr.io/nvidia/rapidsai/base:24.02-cuda12.0-py3.10"
 
 
   // Or use a Dockerfile or Docker Compose file; https://containers.dev/guide/dockerfile
-  "build": {
-    "dockerfile": "../Dockerfile"
+  /*"build": {
+    "dockerfile": ""
   },
+  */
 
   // Features to add to the dev container; https://containers.dev/features.
-  // "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/devcontainers/features/git:1": {"version": "latest"},
+    "ghcr.io/devcontainers-contrib/features/bash-command:1": {}
+  },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "pip3 install --user -r requirements.txt",
+  "postCreateCommand": "pip3 install --user -r requirements.txt --no-cache-dir",
 
   // Configure tool-specific properties.
   "customizations": {
