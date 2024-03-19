@@ -17,6 +17,8 @@ class Points:
         :param x: A time series.
         """
 
+        self.__logger.info(msg=type(x))
+
         return x.quantile(0.10)
     
     def lower_quartile(self, x):
