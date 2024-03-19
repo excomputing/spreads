@@ -1,6 +1,17 @@
+"""
+Module points.py
+"""
+
 import logging
 
 class Points:
+    """
+    Notes
+    -----
+
+    For an inefficient calculation of quantiles, whilst groupby.quantile(q=np.array(...)) is 
+    under development
+    """
 
     def __init__(self):
         """
