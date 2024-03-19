@@ -39,7 +39,7 @@ class Numerics:
         # Calculating per sequence date
         blob: cudf.DataFrame = self.__data.copy()[['sequence_id', 'date', 'measure']]
         calc: cudf.DataFrame = blob.groupby(by=['sequence_id', 'date']).agg(
-            [self.__points.lower_decile, self.__points.lower_quartile, self.__points.median, 
+            [self.__points.lower_decile, self.__points.lower_quartile, self.__points.median,
              self.__points.upper_quartile, self.__points.upper_decile])
 
         calc.reset_index(drop=False, inplace=True, col_level=1,
@@ -71,8 +71,8 @@ class Numerics:
         :return:
         """
 
-        nanoseconds: pd.Series[int] = pd.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
-        milliseconds: pd.Series[int] = (nanoseconds / (10 ** 6)).astype(np.longlong)
+        nanoseconds: pd.Series= pd.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
+        milliseconds: pd.Series = (nanoseconds / (10 ** 6)).astype(np.longlong)
 
         return milliseconds.array
 
