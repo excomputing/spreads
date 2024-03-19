@@ -2,9 +2,9 @@
 Module interface.py
 """
 
+import json
 import dask.dataframe as ddf
 import pandas as pd
-import json
 
 import src.algorithms.numerics
 import src.algorithms.persist
@@ -50,7 +50,7 @@ class Interface:
         """
 
         structure = src.algorithms.structure.Structure(references=references)
-        
+
         for branch in branches:
 
             # A collection of a device's timeseries data; retrieved in parallel
