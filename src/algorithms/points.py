@@ -6,7 +6,7 @@ class Points:
         """
         Constructor
         """
-        
+
         logging.basicConfig(level=logging.INFO, format='%(message)s\n%(asctime)s.%(msecs)03d',
                         datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
@@ -20,7 +20,7 @@ class Points:
         self.__logger.info(msg=type(x))
 
         return x.quantile(0.10)
-    
+
     def lower_quartile(self, x):
         """
         
@@ -28,7 +28,7 @@ class Points:
         """
 
         return x.quantile(0.25)
-    
+
     def median(self, x):
         """
         
