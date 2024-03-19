@@ -6,6 +6,8 @@ import cudf
 import pandas as pd
 import numpy as np
 
+import src.algorithms.points
+
 class Numerics:
     """
     Notes
@@ -22,6 +24,8 @@ class Numerics:
 
         self.__data: cudf.DataFrame = cudf.from_pandas(frame)
 
+        self.points = src.algorithms.points.Points()
+
 
     def __quantiles(self) -> cudf.DataFrame:
         """
@@ -32,17 +36,11 @@ class Numerics:
             A CUDF data frame of quantiles
         """
 
-        # The quantiles equations
-        lower_decile = lambda x: x.quantile(0.1); lower_decile.__name__ = 'lower_decile'
-        lower_quartile = lambda x: x.quantile(0.25); lower_quartile.__name__ = 'lower_quartile'
-        median = lambda x: x.quantile(0.5); median.__name__ = 'median'
-        upper_quartile = lambda x: x.quantile(0.75); upper_quartile.__name__ = 'upper_quartile'
-        upper_decile = lambda x: x.quantile(0.9); upper_decile.__name__ = 'upper_decile'
-
         # Calculating per sequence date
         blob: cudf.DataFrame = self.__data.copy()[['sequence_id', 'date', 'measure']]
         calc: cudf.DataFrame = blob.groupby(by=['sequence_id', 'date']).agg(
-            [lower_decile, lower_quartile, median, upper_quartile, upper_decile])
+            [self.__points.lower_decile, self.__points.lower_quartile, self.__points.median, 
+             self.__points.upper_quartile, self.__points.upper_decile])
 
         calc.reset_index(drop=False, inplace=True, col_level=1,
                          level=['sequence_id', 'date'], col_fill='indices')
