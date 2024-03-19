@@ -2,7 +2,10 @@ import logging
 
 class Points:
 
-    def __init__(self) -> None:
+    def __init__(self):
+        """
+        Constructor
+        """
         
         logging.basicConfig(level=logging.INFO, format='%(message)s\n%(asctime)s.%(msecs)03d',
                         datefmt='%Y-%m-%d %H:%M:%S')
