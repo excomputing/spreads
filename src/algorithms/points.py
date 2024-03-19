@@ -4,6 +4,7 @@ Module points.py
 
 import logging
 
+
 class Points:
     """
     Notes
