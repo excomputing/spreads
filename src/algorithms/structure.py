@@ -22,7 +22,7 @@ class Structure:
         self.__references: pd.DataFrame = references
 
         # The data fields of interest for the spreads graphs
-        self.__fields: list[str] = ['epochmilli', 'lower_decile', 'lower_quartile', 'median', 
+        self.__fields: list[str] = ['epochmilli', 'lower_decile', 'lower_quartile', 'median',
                                     'upper_quartile', 'upper_decile', 'minimum', 'maximum', 'date']
 
     def __attributes(self, sequence_id) -> dict:
