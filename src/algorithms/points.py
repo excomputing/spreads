@@ -34,10 +34,9 @@ class Points:
         
         :param x: A time series.
         """
-        
 
         return x.quantile(0.50)
-    
+
     def upper_quartile(self, x):
         """
         
@@ -45,7 +44,7 @@ class Points:
         """
 
         return x.quantile(0.75)
-    
+
     def upper_decile(self, x):
         """
         
