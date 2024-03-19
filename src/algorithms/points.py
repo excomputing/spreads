@@ -1,8 +1,12 @@
+import logging
 
 class Points:
 
     def __init__(self) -> None:
-        pass
+        
+        logging.basicConfig(level=logging.INFO, format='%(message)s\n%(asctime)s.%(msecs)03d',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
 
     def lower_decile(self, x):
 
