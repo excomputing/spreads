@@ -24,7 +24,7 @@ class Numerics:
 
         self.__data: cudf.DataFrame = cudf.from_pandas(frame)
 
-        self.points = src.algorithms.points.Points()
+        self.__points = src.algorithms.points.Points()
 
 
     def __quantiles(self) -> cudf.DataFrame:
