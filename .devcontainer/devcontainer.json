@@ -32,7 +32,7 @@ Configuration README: https://github.com/devcontainers/templates/tree/main/src/p
   "customizations": {
     "vscode": {
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
+        "python.defaultInterpreterPath": "/opt/conda/bin/python"
       }
     }
   }
