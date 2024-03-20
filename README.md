@@ -1,6 +1,12 @@
 <br>
 
-**In Progress**: The spreads of quantiles of a selection of pollutants; quantiles of measures.
+<span style="color: #777777"><b>IN PROGRESS</b></span>
+
+<br>
+
+**Part III**
+
+The daily quantiles & extrema of the measures.  **Details upcoming.**
 
 |quantile|name|
 |:---|:---|
