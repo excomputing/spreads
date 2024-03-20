@@ -26,7 +26,7 @@ class Setup:
         :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
                               name, buckets, etc.
         """
-        
+
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
@@ -39,7 +39,7 @@ class Setup:
         :return:
             None
         """
-        
+
         directories = src.functions.directories.Directories()
         directories.cleanup(path=self.__configurations.storage)
         directories.create(path=self.__configurations.storage)
@@ -57,9 +57,10 @@ class Setup:
         iterable = objects.filter(prefix=self.__s3_parameters.path_external_quantiles)
 
         # Create a bucket object
-        bucket = src.s3.bucket.Bucket(service=self.__service, location_constraint=self.__s3_parameters.location_constraint, 
+        bucket = src.s3.bucket.Bucket(service=self.__service,
+                                      location_constraint=self.__s3_parameters.location_constraint,
                                       bucket_name=self.__s3_parameters.external)
-        
+
         # If the bucket exists, empty it, otherwise create it
         if bucket.exists():
             iterable.delete()
@@ -74,4 +75,4 @@ class Setup:
         """
 
         self.__local()
-        self.__cloud()    
+        self.__cloud()
