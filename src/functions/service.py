@@ -4,9 +4,7 @@ Module service.py
 
 import boto3
 
-import src.elements.s3_parameters as s3p
 import src.elements.service as sr
-import src.functions.serial
 
 
 class Service:
@@ -39,7 +37,7 @@ class Service:
         self.__secrets_manager = connector.client(
             service_name='secretsmanager', region_name=region_name)
 
-    def exc(self) -> src.elements.service.Service:
+    def exc(self) -> sr.Service:
         """
 
         :return:
@@ -47,6 +45,6 @@ class Service:
         """
 
         # Hence, the collection
-        return src.elements.service.Service(s3_resource=self.__s3_resource,
-                                            s3_client=self.__s3_client,
-                                            secrets_manager=self.__secrets_manager)
+        return sr.Service(s3_resource=self.__s3_resource,
+                          s3_client=self.__s3_client,
+                          secrets_manager=self.__secrets_manager)

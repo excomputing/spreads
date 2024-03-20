@@ -1,7 +1,6 @@
 """
 Module keys.py
 """
-import logging
 
 import boto3
 import botocore.exceptions
@@ -31,11 +30,6 @@ class Keys:
         self.__s3_client = service.s3_client
         self.__bucket = self.__s3_resource.Bucket(name=self.__bucket_name)
 
-        # Logging
-        logging.basicConfig(level=logging.INFO, format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger: logging.Logger = logging.getLogger(__name__)
-
     def particular(self, prefix: str) -> list[str]:
         """
         https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_objects_v2.html
@@ -48,9 +42,9 @@ class Keys:
         try:
             dictionaries = self.__s3_client.list_objects_v2(Bucket=self.__bucket_name, Prefix=prefix)
         except self.__s3_client.exceptions.NoSuchKey as err:
-            raise Exception(err) from err
+            raise err from err
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
 
         items = [dictionary['Key'] for dictionary in dictionaries['Contents']]
 
@@ -66,9 +60,9 @@ class Keys:
         try:
             state: dict = self.__bucket.meta.client.head_bucket(Bucket=self.__bucket.name)
         except self.__bucket.meta.client.exceptions.NoSuchBucket as err:
-            raise Exception(err) from err
+            raise err from err
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
 
         if state:
             items = [k.key for k in list(self.__bucket.objects.all())]

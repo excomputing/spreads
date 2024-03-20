@@ -6,7 +6,7 @@ Configuration README: https://github.com/devcontainers/templates/tree/main/src/p
   "name": "Python 3",
 
   // Image
-  "image": "nvcr.io/nvidia/rapidsai/base:24.02-cuda12.0-py3.10"
+  "image": "nvcr.io/nvidia/rapidsai/base:24.02-cuda12.0-py3.10",
 
 
   // Or use a Dockerfile or Docker Compose file; https://containers.dev/guide/dockerfile
@@ -32,7 +32,7 @@ Configuration README: https://github.com/devcontainers/templates/tree/main/src/p
   "customizations": {
     "vscode": {
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
+        "python.defaultInterpreterPath": "/opt/conda/bin/python"
       }
     }
   }

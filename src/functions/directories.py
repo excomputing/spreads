@@ -41,7 +41,7 @@ class Directories:
         assert len(elements) == 0, f'Unable to delete all directories within path {path}'
 
         # Hence
-        return True if len(elements) == 0 else False
+        return len(elements) == 0
 
     @staticmethod
     def create(path: str) -> bool:
@@ -55,4 +55,4 @@ class Directories:
                 os.makedirs(path)
             return True
         except OSError as err:
-            raise Exception(err) from err
+            raise err from err

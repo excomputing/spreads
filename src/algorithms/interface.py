@@ -2,9 +2,9 @@
 Module interface.py
 """
 
+import json
 import dask.dataframe as ddf
 import pandas as pd
-import json
 
 import src.algorithms.numerics
 import src.algorithms.persist
@@ -33,20 +33,23 @@ class Interface:
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
         # The metadata of the resulting JSON files.
-        self.__metadata: dict[str, str] = config.Config().metadata
+        metadata: dict[str, str] = config.Config().metadata
+        self.__upload = src.s3.upload.Upload(service=self.__service, bucket_name=self.__s3_parameters.external,
+                                             metadata=metadata)
+
+        # Persist
+        self.__persist = src.algorithms.persist.Persist()
 
     def exc(self, branches: list[str], references: pd.DataFrame):
         """
 
-        :param branches: The Amazon S3 bucket branches, each branch is associated with a single telemetric device station/pollutant
+        :param branches: The Amazon S3 bucket branches, each branch is associated 
+                         with a single telemetric device station/pollutant
         :param references: The inventory of station/telemetric device/pollutant metadata.
         :return:
         """
 
         structure = src.algorithms.structure.Structure(references=references)
-        persist = src.algorithms.persist.Persist()
-        upload = src.s3.upload.Upload(service=self.__service, bucket_name=self.__s3_parameters.external,
-                                      metadata=self.__metadata)
 
         for branch in branches:
 
@@ -62,8 +65,8 @@ class Interface:
             name: str = f"pollutant_{dictionary['pollutant_id']}_station_{dictionary['station_id']}.json"
 
             # Upload
-            upload.bytes(buffer=json.dumps(nodes).encode('utf-8'),
+            self.__upload.bytes(buffer=json.dumps(nodes).encode('utf-8'),
                          key_name=f'{self.__s3_parameters.path_external_quantiles}{name}')
 
             # Persist
-            persist.exc(nodes=nodes, name=name)
+            self.__persist.exc(nodes=nodes, name=name)
