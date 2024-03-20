@@ -48,4 +48,4 @@ class Upload:
                 Metadata=self.__metadata)
             return True or False
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
