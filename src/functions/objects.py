@@ -1,7 +1,6 @@
 """
 Module objects.py
 """
-import logging
 import json
 import pathlib
 import requests
