@@ -27,8 +27,8 @@ class Upload:
         """
 
         self.__s3_resource: boto3.session.Session.resource = service.s3_resource
-        self.__bucket_name = bucket_name
-        self.__metadata = metadata
+        self.__bucket_name: str = bucket_name
+        self.__metadata: dict = metadata
 
     def bytes(self, buffer: bytes, key_name: str) -> bool:
         """
