@@ -48,7 +48,7 @@ class Ingress:
                                          ExtraArgs={'Metadata': self.__metadata})
             return f'Uploading {key}'
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
 
     def exc(self, path: str) -> list[str]:
         """
