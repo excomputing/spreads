@@ -84,7 +84,7 @@ class Bucket:
             self.__bucket.wait_until_not_exists()
             return True
         except botocore.exceptions.ClientError as err:
-            raise Exception(err) from err
+            raise err from err
 
     def exists(self) -> bool:
         """
