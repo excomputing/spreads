@@ -1,29 +1,34 @@
-"""
-The secrets
+""" 
+The secret ...
 """
 import json
 
+import boto3
 import botocore.exceptions
-
-import src.elements.service as sr
 
 
 class Secret:
     """
-    This class retrieves the values from Amazon Secrets
+    Description
+    -----------
+    This class retrieves the ...
+
 
     References
     ----------
+
     * https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+
     """
 
-    def __init__(self, service: sr.Service) -> None:
+    def __init__(self) -> None:
+        """
+        The constructor
         """
 
-        :param service: A collection of Amazon services
-        """
-
-        self.__secrets_manager = service.secrets_manager
+        self.__session = boto3.session.Session()
+        self.__secrets_manager = self.__session.client(
+            service_name='secretsmanager')
 
     def __get__value(self, secret_id: str) -> str:
         """
