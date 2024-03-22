@@ -16,6 +16,7 @@ develop <br>
 
 The daily quantiles & extrema of the measures.  **Details upcoming.**
 
+<br>
 
 <table style="width: 60%; border: 0; border-spacing: 5px; margin-left: 35px">
     <colgroup>
