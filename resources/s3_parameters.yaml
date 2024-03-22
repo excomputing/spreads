@@ -1,0 +1,10 @@
+# S3: Endpoints -> https://docs.aws.amazon.com/general/latest/gr/s3.html
+parameters:
+  region_name: ''
+  location_constraint: ''
+  access_control_list: 'bucket-owner-full-control'
+  internal: 'environment-int'
+  path_internal_points: 'pollutants/points/'
+  path_internal_references: 'pollutants/references/'
+  external: 'environment-ext'
+  path_external_quantiles: 'pollutants/quantiles/'
