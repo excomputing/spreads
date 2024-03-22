@@ -56,6 +56,11 @@ python -m pylint --rcfile .pylintrc ...
 
 ## References
 
+* [GitHub Actions](https://docs.github.com/en/actions)
+    * [syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+    * [contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
+    * [variables](https://docs.github.com/en/actions/learn-github-actions/variables)
+* [pip & requirements](https://pip.pypa.io/en/stable/reference/requirements-file-format/)
 * [Air Pollution by Gary Fuller](https://www.theguardian.com/global/2024/feb/23/eu-countries-could-save-238000-lives-a-year-by-meeting-who-air-pollution-guidelines)
 
 <br>
