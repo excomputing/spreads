@@ -57,6 +57,7 @@ python -m pylint --rcfile .pylintrc ...
 ## References
 
 * [GitHub Actions](https://docs.github.com/en/actions)
+    * [build & test](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration): [Java + Maven](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven), [Python](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python)
     * [syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
     * [contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
     * [variables](https://docs.github.com/en/actions/learn-github-actions/variables)
