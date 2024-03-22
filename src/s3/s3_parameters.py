@@ -2,6 +2,7 @@
 import os
 
 import src.elements.s3_parameters as s3p
+import src.functions.secret
 import src.functions.serial
 
 
@@ -25,6 +26,7 @@ class S3Parameters:
         """
 
         self.__uri = os.path.join(os.getcwd(), 'resources', 's3_parameters.yaml')
+        self.__secret = src.functions.secret.Secret()
 
     def __get_dictionary(self) -> dict:
         """
@@ -37,8 +39,7 @@ class S3Parameters:
 
         return blob['parameters']
 
-    @staticmethod
-    def __build_collection(dictionary: dict) -> s3p.S3Parameters:
+    def __build_collection(self, dictionary: dict) -> s3p.S3Parameters:
         """
 
         :param dictionary:
@@ -49,8 +50,9 @@ class S3Parameters:
         s3_parameters = s3p.S3Parameters(**dictionary)
 
         # Parsing variables
-        location_constraint = s3_parameters.location_constraint.format(region_name=s3_parameters.region_name)
-        s3_parameters = s3_parameters._replace(location_constraint=location_constraint)
+        region_name: str = self.__secret.exc(secret_id='RegionCodeDefault')
+        s3_parameters: s3p.S3Parameters = s3_parameters._replace(
+            location_constraint=region_name, region_name=region_name)
 
         return s3_parameters
 
