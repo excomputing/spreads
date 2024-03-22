@@ -4,6 +4,14 @@
 
 <br>
 
+master <br>
+[![Spreads](https://github.com/enqueter/spreads/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/enqueter/spreads/actions/workflows/main.yml)
+
+develop <br>
+[![Spreads](https://github.com/enqueter/spreads/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/enqueter/spreads/actions/workflows/main.yml)
+
+<br>
+
 **Part III**
 
 The daily quantiles & extrema of the measures.  **Details upcoming.**
@@ -15,6 +23,21 @@ The daily quantiles & extrema of the measures.  **Details upcoming.**
 |0.5 |median |
 |0.75 |upper quartile |
 |0.9 |upper decile |
+
+<br>
+
+<table style="width: 60%; border: 0; border-spacing: 5px; margin-left: 35px">
+    <colgroup>
+        <col span="1" style="width: 6.5%;">
+        <col span="1" style="width: 13.5%;">
+    </colgroup>
+    <thead><tr style="text-align: left"><th>quantile</th><th>name</th></tr></thead>
+    <tr><td>0.10</td><td>lower decile</td></tr>
+    <tr><td>0.25</td><td>lower quartile</td></tr>
+    <tr><td>0.50</td><td>median</td></tr>
+    <tr><td>0.75</td><td>upper quartile</td></tr>
+    <tr><td>0.90</td><td>upper decile</td></tr>
+</table>
 
 <br>
 <br>
