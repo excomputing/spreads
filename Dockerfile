@@ -7,10 +7,21 @@ WORKDIR /app
 COPY .devcontainer/requirements.txt /app
 
 # pip
-RUN pip install --upgrade pip && conda install -n base --file requirements.txt
+RUN pip install --upgrade pip && conda install -n base --file requirements.txt && mkdir /app/warehouse
+
+# Specific COPY
+COPY src /app/src
+COPY resources /app/resources
+COPY config.py /app/config.py
 
 # Port
 EXPOSE 8050
 
+# Create mount point
+VOLUME [ "/app/warehouse" ]
+
 # ENTRYPOINT
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["python"]
+
+# CMD
+CMD ["src/main.py"]
