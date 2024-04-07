@@ -13,6 +13,9 @@ class Config:
         # Local results storage area
         self.storage = os.path.join(os.getcwd(), 'warehouse')
 
+        # A S3 parameters template
+        self.s3_parameters_template = 'https://raw.githubusercontent.com/enqueter/.github/master/profile/s3_parameters.yaml'
+
         # The metadata of the resulting JSON files.
         self.metadata = {
             'attributes': 'Brief [telemetric device] raw data source details.',

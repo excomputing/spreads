@@ -33,7 +33,7 @@ class S3Parameters(typing.NamedTuple):
       * The name of the bucket that the project's calculations will be delivered to.
 
     path_external_quantiles
-      * The calculations path
+      * A path
     """
 
     region_name: str
