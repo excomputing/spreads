@@ -11,7 +11,6 @@ RUN pip install --upgrade pip && conda install -n base --file requirements.txt &
 
 # Specific COPY
 COPY src /app/src
-COPY resources /app/resources
 COPY config.py /app/config.py
 
 # Port
