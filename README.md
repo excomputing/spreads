@@ -14,7 +14,7 @@ develop <br>
 
 **Part III**
 
-The daily quantiles & extrema of the measures.  **Details upcoming.**
+Daily quantiles distributions.
 
 <br>
 
