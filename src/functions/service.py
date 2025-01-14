@@ -9,27 +9,27 @@ import src.elements.service as sr
 
 class Service:
     """
-    Notes
-    -----
+    Class Service
+
     Auto-login via IAM Identity Centre Single Sign On; beware of
-    machine prerequisite.  Re-visit, vis-à-vis cloud runs
-      * https://docs.aws.amazon.com/signin/latest/userguide/command-line-sign-in.html
+    machine prerequisite.  Re-visit, vis-à-vis cloud runs.
+      * https://docs.aws.amazon.com/signin/latest/userguide/command-line-sign-in.html.
+
 
     A S3 resource service
       * https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/session.html#boto3.session.Session.resource
     """
 
-    def __init__(self, region_name: str):
-        """
-        The constructor.
+    def __init__(self, connector: boto3.session.Session, region_name: str):
         """
 
-        # Profile/Auto-login
-        # This session will retrieve the developer's <default> Amazon Web Services (AWS) profile
-        # details, which allows for programmatic interaction with AWS.
-        connector = boto3.session.Session()
+        :param connector: A boto3 session instance, it retrieves the developer's <default> Amazon
+                          Web Services (AWS) profile details, which allows for programmatic interaction
+                          with AWS. [Profile/Auto-login]
+        :param region_name: Compute region.
+        """
 
-        # The S3 resource, client, etc.
+        # The S3 resource, S3 client, secrets, etc.
         self.__s3_resource: boto3.session.Session.resource = connector.resource(
             service_name='s3', region_name=region_name)
         self.__s3_client: boto3.session.Session.client = connector.client(

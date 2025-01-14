@@ -1,4 +1,4 @@
-name: Spreads
+name: 'Ex Computing: Daily Quantiles Distributions (RAPIDS)'
 
 on: [push]
 
@@ -14,7 +14,7 @@ jobs:
       max-parallel: 4
       fail-fast: false
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.12"]
 
     steps:
       - uses: actions/checkout@v4
@@ -117,6 +117,7 @@ jobs:
   packages:
     name: GitHub Packages Container Registry
     needs: build
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
     permissions:
@@ -153,9 +154,18 @@ jobs:
           docker build . --file Dockerfile --tag "$REGISTRY/$REPOSITORY:$IMAGE_TAG"
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
 
+      - name: Delete Packages
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ github.event.repository.name }}
+          package-type: 'container'
+          min-versions-to-keep: 1
+          delete-only-untagged-versions: 'true'
+
   ecr:
     name: Amazon Elastic Container Registry
     needs: build
+    if: ${{ false }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -183,7 +193,7 @@ jobs:
         shell: bash
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: 'environment'
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.event.repository.name }}
         run: |
           docker build . --file Dockerfile --tag "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"

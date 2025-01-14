@@ -4,8 +4,8 @@ Module reference.py
 import pandas as pd
 
 import src.elements.s3_parameters as s3p
-import src.elements.service as sr
-import src.s3.unload
+import src.elements.text_attributes as txa
+import src.functions.streams
 
 
 class Reference:
@@ -19,18 +19,16 @@ class Reference:
     the telemetric device, the pollutant being measured, the unit of measure, etc.
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
+    def __init__(self, s3_parameters: s3p.S3Parameters):
         """
 
-        :param service:
         :param s3_parameters:
         """
 
-        self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
-        # S3 Unload Instance
-        self.__unload = src.s3.unload.Unload(service=self.__service)
+        # Data reading and writing instance; for separated values.
+        self.__streams = src.functions.streams.Streams()
 
     def __read(self, filename: str) -> pd.DataFrame:
         """
@@ -39,14 +37,10 @@ class Reference:
         :return:
         """
 
-        key_name = f'{self.__s3_parameters.path_internal_references}{filename}'
-        buffer = self.__unload.exc(
-            bucket_name=self.__s3_parameters.internal, key_name=key_name)
+        uri = f's3://{self.__s3_parameters.internal}/{self.__s3_parameters.path_internal_references}{filename}'
+        text = txa.TextAttributes(uri=uri, header=0)
 
-        try:
-            return pd.read_csv(filepath_or_buffer=buffer, header=0, encoding='utf-8')
-        except ImportError as err:
-            raise err from err
+        return self.__streams.api(text=text)
 
     def exc(self) -> pd.DataFrame:
         """

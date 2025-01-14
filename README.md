@@ -1,20 +1,16 @@
 <br>
 
-<span style="color: #777777"><b>IN PROGRESS</b></span>
-
-<br>
-
 master <br>
-[![Spreads](https://github.com/enqueter/spreads/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/enqueter/spreads/actions/workflows/main.yml)
+[![Ex Computing: Daily Quantiles Distributions (RAPIDS)](https://github.com/excomputing/spreads/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/excomputing/spreads/actions/workflows/main.yml)
 
 develop <br>
-[![Spreads](https://github.com/enqueter/spreads/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/enqueter/spreads/actions/workflows/main.yml)
+[![Ex Computing: Daily Quantiles Distributions (RAPIDS)](https://github.com/excomputing/spreads/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/excomputing/spreads/actions/workflows/main.yml)
 
 <br>
 
 **Part III**
 
-Daily quantiles distributions.
+The calculation of the daily quantiles distributions; via [rapids.ai](https://rapids.ai).
 
 <br>
 

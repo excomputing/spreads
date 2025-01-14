@@ -2,7 +2,8 @@
 Module serial.py
 """
 import yaml
-import requests
+
+import src.functions.api
 
 
 class Serial:
@@ -23,22 +24,14 @@ class Serial:
     def api(url: str) -> dict:
         """
 
-        :param url:
+        :param url: The file string of a local YAML file; path + file name + extension.
         :return:
         """
 
-        try:
-            response = requests.get(url=url, timeout=600)
-            response.raise_for_status()
-        except requests.exceptions.Timeout as err:
-            raise err from err
-        except Exception as err:
-            raise err from err
+        instance = src.functions.api.API()
+        content = instance(url=url)
 
-        if response.status_code == 200:
-            content = response.content.decode(encoding='utf-8')
-            return yaml.safe_load(content)
-        raise f'Failure code: {response.status_code}'
+        return yaml.safe_load(content)
 
     @staticmethod
     def read(uri: str) -> dict:

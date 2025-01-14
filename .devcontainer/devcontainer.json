@@ -5,20 +5,18 @@ Configuration README: https://github.com/devcontainers/templates/tree/main/src/p
 {
   "name": "Python 3",
 
-  // Image
-  "image": "nvcr.io/nvidia/rapidsai/base:24.02-cuda12.0-py3.10",
-
-
   // Or use a Dockerfile or Docker Compose file; https://containers.dev/guide/dockerfile
-  /*"build": {
-    "dockerfile": ""
+  "build": {
+    "dockerfile": "Dockerfile"
   },
-  */
+
 
   // Features to add to the dev container; https://containers.dev/features.
   "features": {
     "ghcr.io/devcontainers/features/aws-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {"version": "latest"},
+    "ghcr.io/devcontainers-extra/features/curl-apt-get:1": {},
+    "ghcr.io/devcontainers-extra/features/wget-apt-get:1": {},
     "ghcr.io/devcontainers-contrib/features/bash-command:1": {}
   },
 
