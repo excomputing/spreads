@@ -34,6 +34,9 @@ class S3Parameters(typing.NamedTuple):
 
     path_external_quantiles
       * A path
+
+    configurations
+      * The configurations bucket
     """
 
     region_name: str
@@ -44,3 +47,4 @@ class S3Parameters(typing.NamedTuple):
     path_internal_references: str
     external: str
     path_external_quantiles: str
+    configurations: str
