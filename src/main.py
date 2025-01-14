@@ -5,6 +5,7 @@ import logging
 import os
 import sys
 
+import boto3
 import pandas as pd
 
 
@@ -27,7 +28,7 @@ def main():
     branches = src.algorithms.branches.Branches(service=service, s3_parameters=s3_parameters).exc()
 
     # References
-    references: pd.DataFrame = src.algorithms.reference.Reference(service=service, s3_parameters=s3_parameters).exc()
+    references: pd.DataFrame = src.algorithms.reference.Reference(s3_parameters=s3_parameters).exc()
 
     # Calculate quantiles
     src.algorithms.interface.Interface(service=service, s3_parameters=s3_parameters).exc(
@@ -61,9 +62,11 @@ if __name__ == '__main__':
     import src.s3.s3_parameters
     import src.setup
 
-    # Instances
-    s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters().exc()
-    service: sr.Service = src.functions.service.Service(region_name=s3_parameters.region_name).exc()
+    # S3 S3Parameters, Service Instance
+    connector = boto3.session.Session()
+    s3_parameters: s3p.S3Parameters = src.s3.s3_parameters.S3Parameters(connector=connector).exc()
+    service: sr.Service = src.functions.service.Service(
+        connector=connector, region_name=s3_parameters.region_name).exc()
 
     # Setting up
     src.setup.Setup(service=service, s3_parameters=s3_parameters).exc()
