@@ -56,6 +56,10 @@ python -m pylint --rcfile .pylintrc ...
 
 ## References
 
+* [RAPIDS Base](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/rapidsai/containers/base)
+* [devcontainers & Dockerfile](https://containers.dev/guide/dockerfile)
+* [devcontainers & Features](https://containers.dev/features)
+
 * [GitHub Actions](https://docs.github.com/en/actions)
     * [build & test](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration): [Java + Maven](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven), [Python](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python)
     * [syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
