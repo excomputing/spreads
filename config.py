@@ -1,7 +1,11 @@
+"""Module config.py"""
 import os
 
 
 class Config:
+    """
+    Configurations
+    """
 
     def __init__(self):
         """
@@ -14,7 +18,7 @@ class Config:
         self.storage = os.path.join(os.getcwd(), 'warehouse')
 
         # A S3 parameters template
-        self.s3_parameters_template = 'https://raw.githubusercontent.com/enqueter/.github/master/profile/s3_parameters.yaml'
+        self.s3_parameters_key = 's3_parameters.yaml'
 
         # The metadata of the resulting JSON files.
         self.metadata = {
