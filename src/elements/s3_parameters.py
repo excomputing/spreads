@@ -48,3 +48,4 @@ class S3Parameters(typing.NamedTuple):
     external: str
     path_external_quantiles: str
     configurations: str
+    path_external_spreads: str = 'warehouse/spreads/'
