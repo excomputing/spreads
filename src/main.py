@@ -26,9 +26,11 @@ def main():
 
     # Branches
     branches = src.algorithms.branches.Branches(service=service, s3_parameters=s3_parameters).exc()
+    logger.info(branches)
 
     # References
     references: pd.DataFrame = src.algorithms.reference.Reference(s3_parameters=s3_parameters).exc()
+    logger.info(references)
 
     # Calculate quantiles
     src.algorithms.interface.Interface(service=service, s3_parameters=s3_parameters).exc(
