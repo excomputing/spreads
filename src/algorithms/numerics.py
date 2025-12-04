@@ -74,7 +74,7 @@ class Numerics:
         nanoseconds: pd.Series= pd.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
         milliseconds: pd.Series = (nanoseconds / (10 ** 6)).astype(np.longlong)
 
-        return milliseconds.array
+        return milliseconds.to_numpy()
 
     def exc(self) -> pd.DataFrame:
         """
