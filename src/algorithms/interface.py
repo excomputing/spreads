@@ -66,7 +66,7 @@ class Interface:
 
             # Upload
             self.__upload.bytes(buffer=json.dumps(nodes).encode('utf-8'),
-                         key_name=f'{self.__s3_parameters.path_external_quantiles}{name}')
+                         key_name=f'{self.__s3_parameters.path_external_spreads}{name}')
 
             # Persist
             self.__persist.exc(nodes=nodes, name=name)
