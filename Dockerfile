@@ -1,5 +1,5 @@
 # Base Image
-FROM nvcr.io/nvidia/rapidsai/base:25.04-cuda12.8-py3.12
+FROM nvcr.io/nvidia/rapidsai/base:25.06-cuda12.8-py3.12
 
 
 USER root
@@ -25,7 +25,7 @@ RUN apt update && apt -q -y upgrade && apt -y install sudo && sudo apt -y instal
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" && \
     unzip /tmp/awscliv2.zip -d /tmp/ && cd /tmp && sudo ./aws/install && cd ~ && \
     pip install --upgrade pip && \
-    pip install $(grep -ivE "dask\[complete\]|cudf-cu12|dask-cudf-cu12" /app/requirements.txt) --no-cache-dir && \
+    pip install $(grep -ivE "dask\[complete\]|cudf-cu12|dask-cudf-cu12|cuvs-cu12|pylibraft-cu12|raft-dask-cu12" /app/requirements.txt) --no-cache-dir && \
     mkdir /app/warehouse && \
     chown -R rapids /app/warehouse
 

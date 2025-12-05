@@ -1,6 +1,11 @@
 
 <br>
 
+> [!NOTE]
+> [rapids.ai application programming interface](https://docs.rapids.ai/api/)
+
+<br>
+
 ## Environments
 
 **Note**, the [requirements.txt](requirements.txt) file includes
@@ -15,7 +20,7 @@ and
 
 for GitHub Actions code analysis purposes.  These packages are included in the base image
 
-> nvcr.io/nvidia/rapidsai/base:25.04-cuda12.8-py3.12
+* nvcr.io/nvidia/rapidsai/base:25.06-cuda12.8-py3.12
 
 by default.  Hence, during the Dockerfile building steps each applicable Docker file filters out the above packages.
 
