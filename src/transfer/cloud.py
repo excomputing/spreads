@@ -2,8 +2,6 @@
 Module setup.py
 """
 
-import config
-
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.s3.bucket
@@ -28,9 +26,6 @@ class Cloud:
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
-
-        # Configurations
-        self.__configurations = config.Config()
 
     def __cloud(self) -> None:
         """
