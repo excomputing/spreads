@@ -1,6 +1,11 @@
 
 <br>
 
+> [!NOTE]
+> [rapids.ai application programming interface](https://docs.rapids.ai/api/)
+
+<br>
+
 ## Environments
 
 **Note**, the [requirements.txt](requirements.txt) file includes
