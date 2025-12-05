@@ -22,11 +22,9 @@ def main():
 
     # Logging
     logger = logging.getLogger(__name__)
-    logger.info('Spreads')
 
     # Branches
     branches = src.algorithms.branches.Branches(service=service, s3_parameters=s3_parameters).exc()
-    logger.info(branches)
 
     # References
     references: pd.DataFrame = src.algorithms.reference.Reference(s3_parameters=s3_parameters).exc()
@@ -38,7 +36,7 @@ def main():
 
     # Transfer
     src.transfer.interface.Interface(
-        connector=connector, service=service, s3_parameters=s3_parameters).exc()
+        service=service, s3_parameters=s3_parameters).exc()
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
