@@ -15,7 +15,8 @@ class Config:
         """
 
         # Local results storage area
-        self.storage = os.path.join(os.getcwd(), 'warehouse')
+        self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+        self.storage = os.path.join(self.warehouse, 'spreads')
 
         # A S3 parameters template
         self.s3_parameters_key = 's3_parameters.yaml'

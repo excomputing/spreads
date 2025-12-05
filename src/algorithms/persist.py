@@ -2,7 +2,7 @@
 Module persist.py
 """
 import logging
-import os.path
+import os
 
 import config
 import src.functions.objects
@@ -40,5 +40,8 @@ class Persist:
         :return:
         """
 
-        message: str = self.__objects.write(nodes=nodes, path=os.path.join(self.__storage, name))
-        self.__logger.info(msg=message)
+        message: bool = self.__objects.write(nodes=nodes, path=os.path.join(self.__storage, name))
+        self.__logger.info(
+            '%s: %s', name, message)
+
+        return message

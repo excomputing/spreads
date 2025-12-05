@@ -1,12 +1,13 @@
 """
 Module numerics.py
 """
-import logging
+
 import cudf
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 import src.algorithms.points
+
 
 class Numerics:
     """
@@ -63,18 +64,19 @@ class Numerics:
 
         return calc
 
-    def __epoch(self, x: pd.Series) -> np.ndarray:
+    @staticmethod
+    def __epoch(values: pd.Series) -> np.ndarray:
         """
         Adding an epoch field; milliseconds seconds since 1 January 1970.
 
-        :param blob:
+        :param values:
         :return:
         """
 
-        nanoseconds: pd.Series= pd.to_datetime(x, format='%Y-%m-%d').astype(np.int64)
+        nanoseconds: pd.Series= pd.to_datetime(values, format='%Y-%m-%d').astype(np.int64)
         milliseconds: pd.Series = (nanoseconds / (10 ** 6)).astype(np.longlong)
 
-        return milliseconds.array
+        return milliseconds.to_numpy()
 
     def exc(self) -> pd.DataFrame:
         """
@@ -96,7 +98,6 @@ class Numerics:
         numbers.rename(columns={'min': 'minimum', 'max': 'maximum'}, inplace=True)
 
         # Append an epoch field
-        numbers.loc[:, 'epochmilli'] = self.__epoch(x=numbers['date'])
-        logging.log(level=logging.INFO, msg=numbers)
+        numbers.loc[:, 'epochmilli'] = self.__epoch(values=numbers['date'])
 
         return numbers

@@ -22,17 +22,21 @@ def main():
 
     # Logging
     logger = logging.getLogger(__name__)
-    logger.info('Spreads')
 
     # Branches
     branches = src.algorithms.branches.Branches(service=service, s3_parameters=s3_parameters).exc()
 
     # References
     references: pd.DataFrame = src.algorithms.reference.Reference(s3_parameters=s3_parameters).exc()
+    logger.info(references)
 
     # Calculate quantiles
     src.algorithms.interface.Interface(service=service, s3_parameters=s3_parameters).exc(
         branches=branches, references=references)
+
+    # Transfer
+    src.transfer.interface.Interface(
+        service=service, s3_parameters=s3_parameters).exc()
 
     # Delete cache directories
     src.functions.cache.Cache().delete()
@@ -61,6 +65,7 @@ if __name__ == '__main__':
     import src.functions.service
     import src.s3.s3_parameters
     import src.setup
+    import src.transfer.interface
 
     # S3 S3Parameters, Service Instance
     connector = boto3.session.Session()
@@ -69,6 +74,6 @@ if __name__ == '__main__':
         connector=connector, region_name=s3_parameters.region_name).exc()
 
     # Setting up
-    src.setup.Setup(service=service, s3_parameters=s3_parameters).exc()
+    src.setup.Setup().exc()
 
     main()

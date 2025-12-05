@@ -16,6 +16,10 @@ jobs:
       matrix:
         python-version: ["3.12"]
 
+    permissions:
+      contents: read
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -28,7 +32,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f ${{ github.workspace }}/.devcontainer/requirements.txt ]; then pip install -r ${{ github.workspace }}/.devcontainer/requirements.txt; fi
-          if [ -f ${{ github.workspace }}/.devcontainer/extra.txt ]; then pip install -r ${{ github.workspace }}/.devcontainer/extra.txt; fi
 
       - name: Lint with flake8
         run: |
@@ -54,6 +57,9 @@ jobs:
           printf "\n src/s3 "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/s3
           
+          printf "\n src/transfer "
+          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/transfer
+          
           
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           printf "\n\n"
@@ -70,6 +76,9 @@ jobs:
           
           printf "\n src/s3 "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/s3
+          
+          printf "\n src/transfer "
+          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/transfer
 
       - name: Lint with pylint
         run: |
@@ -87,6 +96,9 @@ jobs:
                     
           printf "\n Package src/s3"
           pylint --rcfile .pylintrc src/s3
+          
+          printf "\n Package src/transfer"
+          pylint --rcfile .pylintrc src/transfer
 
       - name: Test with pytest
         run: |
@@ -112,6 +124,9 @@ jobs:
                     
           printf "\nCoverage tests/s3/"
           printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/references/ tests/s3/"
+          
+          printf "\nCoverage tests/transfer/"
+          printf "\n Upcoming ... pytest --cov-report term-missing  --cov src/references/ tests/transfer/"
 
 
   packages:
@@ -129,7 +144,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Logging into GitHub Container
-        uses: docker/login-action@v3
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -137,7 +152,7 @@ jobs:
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
         with:
           tags: |
             type=ref,event=branch
@@ -176,14 +191,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 # v4.1.0
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ENTRY }}:role/${{ secrets.AWS_ARN_ECR_ACTIONS }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
         with:
           registries: ${{ secrets.AWS_ENTRY }}
           mask-password: "true"

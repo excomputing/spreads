@@ -2,7 +2,6 @@
 Module objects.py
 """
 import json
-import pathlib
 
 import src.functions.api
 
@@ -22,23 +21,22 @@ class Objects:
         """
 
     @staticmethod
-    def write(nodes: dict, path: str) -> str:
+    def write(nodes: dict, path: str) -> bool:
         """
+        name = pathlib.Path(path).stem
 
         :param nodes:
         :param path:
         :return:
         """
 
-        name = pathlib.Path(path).stem
-
         if not bool(nodes):
-            return f'{name}: empty'
+            return False
 
         try:
             with open(file=path, mode='w', encoding='utf-8') as disk:
                 json.dump(obj=nodes, fp=disk, ensure_ascii=False, indent=4)
-            return f'{name}: succeeded'
+            return True
         except IOError as err:
             raise err from err
 
