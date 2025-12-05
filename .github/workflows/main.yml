@@ -170,10 +170,10 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/share/doc/dotnet-*
           sudo rm -rf /opt/ghc
-          sudo rm -f /usr/local/.ghcup
+          sudo rm -rf /usr/local/.ghcup
           sudo rm -rf /opt/cabal
-          sudo rm -f /home/runner/.ghcup
-          sudo rm -f /home/runner/.cabal
+          sudo rm -rf /home/runner/.ghcup
+          sudo rm -rf /home/runner/.cabal
 
       - name: Build & Push
         shell: bash
