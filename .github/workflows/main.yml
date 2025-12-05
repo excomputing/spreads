@@ -160,6 +160,21 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 
+      - name: Space
+        shell: bash
+        run: |
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/android
+          sudo rm -rf /usr/local/android-sdk
+          sudo rm -rf /home/runner/Android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/share/doc/dotnet-*
+          sudo rm -rf /opt/ghc
+          sudo rm -f /usr/local/.ghcup
+          sudo rm -rf /opt/cabal
+          sudo rm -f /home/runner/.ghcup
+          sudo rm -f /home/runner/.cabal
+
       - name: Build & Push
         shell: bash
         env:
