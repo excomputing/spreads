@@ -16,8 +16,7 @@ Configuration README: https://github.com/devcontainers/templates/tree/main/src/p
     "ghcr.io/devcontainers/features/aws-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {"version": "latest"},
     "ghcr.io/devcontainers-extra/features/curl-apt-get:1": {},
-    "ghcr.io/devcontainers-extra/features/wget-apt-get:1": {},
-    "ghcr.io/devcontainers-contrib/features/bash-command:1": {}
+    "ghcr.io/devcontainers-extra/features/wget-apt-get:1": {}
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
